@@ -7,7 +7,7 @@ const {
   USER_NOT_FOUND,
   TOKEN_ERROR,
   INCORRECT_PASSWORD
-} = require('../../utils/constants');
+} = require("../../utils/constants");
 
 router.post("/login", async (req, res, next) => {
   let errors = {};
@@ -50,6 +50,7 @@ router.post("/login", async (req, res, next) => {
 router.post("/register", async (req, res) => {
   const { user } = req.body;
   const { username, password } = user;
+  const response = {};
 
   if (await User.findOne({ username })) {
     return res.json('Username "' + username + '" is already taken');
@@ -62,8 +63,35 @@ router.post("/register", async (req, res) => {
   }
 
   await newUser.save(user).then((user, err) => {
-    return res.json({ status: STATUS_OK, newUser: user });
+    bcrypt.compare(password, user.hash).then(isMatch => {
+      if (isMatch) {
+        const payload = {
+          id: user._id,
+          username: user.username
+        };
+        jwt.sign(
+          payload,
+          process.env.SECRET,
+          {
+            expiresIn: 3600
+          },
+          (err, token) => {
+            if (err) console.error(TOKEN_ERROR, err);
+
+            return res.json({
+              status: STATUS_OK,
+              newUser: user,
+              success: true,
+              token
+            });
+          }
+        );
+      } else {
+        errors.password = INCORRECT_PASSWORD;
+        return res.json(400).json(errors);
+      }
+    });
   });
 });
 
-module.exports = router
+module.exports = router;
