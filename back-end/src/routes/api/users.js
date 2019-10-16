@@ -53,7 +53,7 @@ router.post("/register", async (req, res) => {
   const response = {};
 
   if (await User.findOne({ username })) {
-    return res.json('Username "' + username + '" is already taken');
+    return res.json({ error: 'Username "' + username + '" is already taken' });
   }
 
   const newUser = new User(user);

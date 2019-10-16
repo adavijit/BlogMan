@@ -1,87 +1,92 @@
-import React, { Component } from 'react'
-import constants from '../../utils/constants'
-import { TextField, Button } from '@material-ui/core'
-import { connect } from 'react-redux'
-import axios from 'axios'
-import jwt_decode from 'jwt-decode'
-import { setAuthToken } from '..'
+import React, { Component } from "react";
+import constants from "../../utils/constants";
+import { TextField, Button } from "@material-ui/core";
+import { connect } from "react-redux";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+import { setAuthToken } from "..";
 
 class Login extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
       isAuthenticated: false,
       exists: false,
-      hidden: true,
-    }
+      hidden: true
+    };
 
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    if (localStorage.getItem('user')) {
-      this.props.history.push('/')
+    if (localStorage.getItem("user")) {
+      this.props.history.push("/");
     }
   }
 
   handleSubmit(e) {
-    e.preventDefault()
-    const { loginUser } = this.props
-    const { username, password } = this.state
+    e.preventDefault();
+    const { loginUser } = this.props;
+    const { username, password } = this.state;
     const user = {
       username,
-      password,
-    }
+      password
+    };
 
     return axios
-      .post('http://localhost:3000/api/users/login', {
-        user,
+      .post("http://localhost:3000/api/users/login", {
+        user
       })
       .then(res => {
-        if (res.data.error) return console.warn(res)
-        const { token } = res.data
-        setAuthToken(token)
-        const decoded = jwt_decode(token)
-        loginUser(decoded)
+        if (res.data.error) return console.warn(res);
+        const { token } = res.data;
+        setAuthToken(token);
+        const decoded = jwt_decode(token);
+        loginUser(decoded);
         if (this.props.auth) {
-          localStorage.setItem('id_token', token)
-          localStorage.setItem('user', JSON.stringify(decoded))
+          localStorage.setItem("token_id", token);
+          localStorage.setItem("user", JSON.stringify(decoded));
           this.setState({
             exists: true
-          })
-          this.props.history.push('/', this.state)
+          });
+          this.props.history.push("/", this.state);
         }
-      }).catch(err => {
-        this.setState({
-          hidden: false,
-        })
-        this.props.history.push('/login')
       })
+      .catch(err => {
+        this.setState({
+          hidden: false
+        });
+        this.props.history.push("/sign-in");
+      });
   }
 
   handleChange(key, event) {
     this.setState({
-      [key]: event.target.value,
-    })
+      [key]: event.target.value
+    });
   }
 
   render() {
-    const { username, password, exists, hidden } = this.state
-    const isEnabled = username && password
+    const { username, password, exists, hidden } = this.state;
+    const isEnabled = username && password;
     return (
       <div className="wrap-registerForm">
         <div className="registerForm">
-            {!exists ? <div style={styles} hidden={hidden}>User not found</div> : null}
+          {!exists ? (
+            <div style={styles} hidden={hidden}>
+              User not found
+            </div>
+          ) : null}
           <span className="formLegend">Sign In</span>
           <form onSubmit={this.handleSubmit} autoComplete="off">
             <TextField
               value={username}
               label="Username*"
-              onChange={ev => this.handleChange('username', ev)}
+              onChange={ev => this.handleChange("username", ev)}
               name="username"
               fullWidth
               margin="normal"
@@ -90,45 +95,45 @@ class Login extends Component {
             <TextField
               value={password}
               label="Password*"
-              onChange={ev => this.handleChange('password', ev)}
+              onChange={ev => this.handleChange("password", ev)}
               name="password"
               fullWidth
               margin="normal"
               type="password"
             />
             <Button
-              style={{ marginTop: '10px' }}
+              style={{ marginTop: "10px" }}
               type="submit"
               disabled={!isEnabled}
               color="primary"
             >
               Log In
             </Button>
-            <div>Don't have an account? <a href="/register"> Register </a> </div>
+            <div>
+              Don't have an account? <a href="/sign-up"> Sign Up </a>
+            </div>
           </form>
         </div>
       </div>
-    )
+    );
   }
 }
 
 const styles = {
-  color: 'red',
-  marginBottom: '15px'
-}
+  color: "red",
+  marginBottom: "15px"
+};
 
-const mapStateToProps = state => (
-  {
-    user: state.username,
-    auth: state.auth.isAuthenticated,
-  }
-)
+const mapStateToProps = state => ({
+  user: state.username,
+  auth: state.auth.isAuthenticated
+});
 
 const mapDispatchToProps = dispatch => ({
-  loginUser: user => dispatch({ type: constants.SET_CURRENT_USER, user }),
-})
+  loginUser: user => dispatch({ type: constants.SET_CURRENT_USER, user })
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login)
+)(Login);
