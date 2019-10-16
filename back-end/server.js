@@ -32,38 +32,6 @@ require('./src/models/User')
 
 app.use(require('./src/routes'))
 
-app.use((req, res, next) => {
-  const err = new Error("Not Found");
-  err.statusCode = 404;
-  next(err);
-});
-
-if (!isProduction) {
-  app.use((err, req, res) => {
-    res.status(err.statusCode || 500);
-
-    res.json({
-      errors: {
-        message: err.statusMessage,
-        error: err
-      }
-    });
-  });
-}
-
-app.use((err, req, res) => {
-  res.status(err.status || 500);
-
-  res.json({
-    errors: {
-      message: {
-        err: statusMessage,
-        error: {}
-      }
-    }
-  });
-});
-
 app.listen(app.get("port"), () => {
   console.log(`Listening on port ${app.get("port")}`);
 });
