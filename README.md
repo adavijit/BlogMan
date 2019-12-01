@@ -1,16 +1,5 @@
 # BlogMan
 
-<p align="center">
-  <a href="#">
-    <img src="https://img.shields.io/github/release/adavijit/BlogMan.svg"
-         alt="version">
-  </a>
-  <a href="#">
-    <img src="https://img.shields.io/github/license/adavijit/BlogMan.svg"
-         alt="version">
-  </a>
-
-</p>
 <p>
   Communication channel link : https://gitter.im/ADKWOC/BlogMan?utm_source=share-link&utm_medium=link&utm_campaign=share-link
 </p>
