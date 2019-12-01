@@ -11,6 +11,9 @@
   </a>
 
 </p>
+<p>
+  Communication channel link : https://gitter.im/ADKWOC/BlogMan?utm_source=share-link&utm_medium=link&utm_campaign=share-link
+</p>
 
 BlogMan is a new social blogging platform where anybody can share their views and read other's opinion related to any topic. It is a way to connect with people and to know how the world is thinking.
 
