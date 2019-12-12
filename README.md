@@ -2,7 +2,7 @@
 
 <p>
   Communication channel link :
-  https://kwoc-koss.slack.com/archives/CRLEHTAFN
+
   
   https://gitter.im/ADKWOC/BlogMan?utm_source=share-link&utm_medium=link&utm_campaign=share-link
 </p>
