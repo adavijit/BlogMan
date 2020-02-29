@@ -23,7 +23,11 @@ if (!isProduction) app.use(errorHandler);
 mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-}, () => {
+}, (error) => {
+  if(error) {
+    console.log("Mongoose connection failed");
+    throw error;
+  }
   console.log('Mongoose connected')
 });
 mongoose.set("debug", true);
