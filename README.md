@@ -13,7 +13,11 @@ BlogMan is a new social blogging platform where anybody can share their views an
 
 BlogMan is created using the Mongo, Express, React and NodeJS (MERN) stack.
 
-In the project directory, you can run:
+In the project directory `BlogMan/front-end`, run this command to install dependencies:
+
+### `npm install`
+
+In order to run the application:
 
 ### `npm start`
 
