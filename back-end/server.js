@@ -28,8 +28,13 @@ mongoose
     useCreateIndex: true,
     useUnifiedTopology: true,
     useFindAndModify: false
-  })
-  .then(() => console.log("DB Connected Succesfully"));
+  }, (error) => {
+  if(error) {
+    console.log("Mongoose connection failed");
+    throw error;
+  }
+  console.log('Mongoose connected')
+});
 mongoose.set("debug", true);
 
 app.use(require("./src/routes"));
