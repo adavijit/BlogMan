@@ -4,7 +4,7 @@ import { TextField, Button } from "@material-ui/core";
 import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { setAuthToken } from "..";
-import axios from "axios";
+import { userRegister } from "../../services/user";
 
 class Register extends Component {
   constructor(props) {
@@ -46,10 +46,7 @@ class Register extends Component {
       birth
     };
 
-    return axios
-      .post("http://localhost:3000/api/users/register", {
-        user
-      })
+    userRegister({ user })
       .then(res => {
         if (res.data.error) {
           this.setState({

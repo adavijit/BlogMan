@@ -7,20 +7,17 @@
 </p>
 
 
-<p>
-  Communication channel link :
-
-  
-  https://gitter.im/ADKWOC/BlogMan?utm_source=share-link&utm_medium=link&utm_campaign=share-link
-</p>
-
 BlogMan is a new social blogging platform where anybody can share their views and read other's opinion related to any topic. It is a way to connect with people and to know how the world is thinking.
 
 ## Build Setup
 
 BlogMan is created using the Mongo, Express, React and NodeJS (MERN) stack.
 
-In the project directory, you can run:
+In the project directory `BlogMan/front-end`, run this command to install dependencies:
+
+### `npm install`
+
+In order to run the application:
 
 ### `npm start`
 
