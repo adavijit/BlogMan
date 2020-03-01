@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import constants from "../../utils/constants";
 import { TextField, Button } from "@material-ui/core";
 import { connect } from "react-redux";
-import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { setAuthToken } from "..";
+import { userLogin } from "../../services/user"
 
 class Login extends Component {
   constructor(props) {
@@ -36,11 +36,7 @@ class Login extends Component {
       username,
       password
     };
-
-    return axios
-      .post("http://localhost:5000/api/users/login", {
-        user
-      })
+    userLogin({ user })
       .then(res => {
         if (res.data.error) return console.warn(res);
         const { token } = res.data;
@@ -55,13 +51,12 @@ class Login extends Component {
           });
           this.props.history.push("/", this.state);
         }
-      })
-      .catch(err => {
+    }).catch(error => {
         this.setState({
           hidden: false
         });
         this.props.history.push("/sign-in");
-      });
+    })
   }
 
   handleChange(key, event) {
