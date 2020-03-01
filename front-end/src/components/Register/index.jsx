@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { setAuthToken } from "..";
 import axios from "axios";
+import { API_BASE_URL } from '../../utils/constants';
 
 class Register extends Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class Register extends Component {
     };
 
     return axios
-      .post("http://localhost:3000/api/users/register", {
+      .post(`${API_BASE_URL}/users/register`, {
         user
       })
       .then(res => {
