@@ -45,7 +45,9 @@ class Login extends Component {
     };
 
     return axios
+
       .post(`${API_BASE_URL}/users/login`, {
+
         user
       })
       .then(res => {
