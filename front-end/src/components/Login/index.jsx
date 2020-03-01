@@ -4,6 +4,8 @@ import constants from "../../utils/constants";
 import { TextField, Button, Divider } from "@material-ui/core";
 import { Alert } from '@material-ui/lab';
 
+import { Link } from 'react-router-dom';
+
 import { connect } from "react-redux";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
@@ -87,9 +89,7 @@ class Login extends Component {
         <Divider style={{ marginBottom: '20px'}}/>
 
         {!exists ? (
-          // <div style={styles} hidden={hidden}>
-          //   User not found
-          // </div>
+          
           <Alert severity="error" hidden={hidden}>Sorry! User not found..</Alert>
         ) : null}
         <form onSubmit={this.handleSubmit} autoComplete="off">
@@ -125,7 +125,7 @@ class Login extends Component {
             </Button>
           </div>
           <div>
-            Don't have an account? <a href="/sign-up"> Sign Up </a>
+            Don't have an account? <Link to="/sign-up"> Sign Up </Link>
           </div>
         </form>
       </div>

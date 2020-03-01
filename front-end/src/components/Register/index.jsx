@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import constants from "../../utils/constants";
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button, Divider } from "@material-ui/core";
+import { Alert } from '@material-ui/lab';
+import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { setAuthToken } from "..";
@@ -105,7 +107,8 @@ class Register extends Component {
       return (
         <Button
           style={{ marginTop: "10px" }}
-          color="primary"
+          variant="contained" color="primary"
+          size="large"
           onClick={this.nextStep}
         >
           Next
@@ -121,14 +124,16 @@ class Register extends Component {
     if (step !== 1) {
       return (
         <Fragment>
-          <Button style={{ marginTop: "10px" }} onClick={this.prevStep}>
+          <Button style={{ marginTop: "10px" }} onClick={this.prevStep}  variant="contained" color="primary"
+              size="large">
             Back
           </Button>
           <Button
             style={{ marginTop: "10px" }}
             type="submit"
             disabled={!isEnabled}
-            color="primary"
+            variant="contained" color="primary"
+            size="large"
           >
             Register
           </Button>
@@ -156,12 +161,13 @@ class Register extends Component {
     return (
       <div className="wrap-registerForm">
         <div className="registerForm">
+          
+         <h2 className="signInHeading">Sign Up</h2>
+          <Divider style={{ marginBottom: '20px'}}/>
           {!exists ? (
-            <div style={styles} hidden={hidden}>
-              {error}
-            </div>
-          ) : null}
-          <span className="formLegend">Sign Up</span>
+          
+          <Alert severity="error" hidden={hidden}>{error}</Alert>
+        ) : null}
           <form onSubmit={this.handleSubmit} autoComplete="off">
             <PersonalDetails
               step={step}
@@ -181,8 +187,8 @@ class Register extends Component {
               {this.prevBtn(isEnabled)}
               {this.nextBtn()}
             </div>
-            <div>
-              Have an account? <a href="/sign-in"> Sign In </a>
+            <div style={{ marginTop: '20px'}}>
+              Have an account? <Link to="/sign-in"> Sign In </Link>
             </div>
           </form>
         </div>
@@ -205,6 +211,7 @@ function PersonalDetails(props) {
         name="name"
         fullWidth
         margin="normal"
+        variant="outlined"
       />
       <br />
       <TextField
@@ -214,6 +221,7 @@ function PersonalDetails(props) {
         name="lastname"
         fullWidth
         margin="normal"
+        variant="outlined"
       />
       <br />
       <TextField
@@ -226,6 +234,7 @@ function PersonalDetails(props) {
           shrink: true
         }}
         margin="normal"
+        variant="outlined"
       />
       <br />
     </Fragment>
@@ -246,6 +255,7 @@ function UserDetails(props) {
         name="username"
         fullWidth
         margin="normal"
+        variant="outlined"
       />
       <br />
       <TextField
@@ -256,6 +266,7 @@ function UserDetails(props) {
         fullWidth
         margin="normal"
         type="password"
+        variant="outlined"
       />
       <br />
     </Fragment>
