@@ -17,7 +17,17 @@ const UserSchema = new Schema(
         lastname: String,
         birth: Date,
         bio: String,
-    },
+        email: {
+            type: 'string',
+            match : /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
+        },
+        interests : String,
+        post_liked : String,
+        comments : String,
+        skills : String,
+        college : String,
+        search_interests : String
+        },
     { timestamps: true }
 )
 
