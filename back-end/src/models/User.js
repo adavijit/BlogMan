@@ -32,7 +32,7 @@ const UserSchema = new Schema(
 )
 
 UserSchema.methods.toJSON = function() {
-    const { _id, username, name, lastname, birth, createdAt, updatedAt } = this
+    const { _id, username, name, lastname, birth, createdAt, updatedAt, interests , email, college ,skills} = this
     return {
         _id,
         username,
@@ -40,7 +40,11 @@ UserSchema.methods.toJSON = function() {
         lastname,
         birth,
         createdAt,
-        updatedAt
+        updatedAt,
+        interests,
+        email,
+        college,
+        skills
     }
 }
 
