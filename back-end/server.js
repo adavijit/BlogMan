@@ -5,6 +5,8 @@ const cors = require("cors");
 const errorHandler = require("error-handler");
 const mongoose = require("mongoose");
 
+require("./src/models/User");
+
 mongoose.Promise = global.Promise;
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -20,10 +22,13 @@ app.use(bodyParser.json());
 
 if (!isProduction) app.use(errorHandler);
 
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}, (error) => {
+mongoose
+  .connect(process.env.MONGO_URL_LOCAL, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+  }, (error) => {
   if(error) {
     console.log("Mongoose connection failed");
     throw error;
@@ -32,9 +37,7 @@ mongoose.connect(process.env.MONGO_URL, {
 });
 mongoose.set("debug", true);
 
-require('./src/models/User')
-
-app.use(require('./src/routes'))
+app.use(require("./src/routes"));
 
 app.listen(app.get("port"), () => {
   console.log(`Listening on port ${app.get("port")}`);
