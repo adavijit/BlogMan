@@ -6,6 +6,7 @@ const errorHandler = require("error-handler");
 const mongoose = require("mongoose");
 
 require("./src/models/User");
+require("./src/models/Blog");
 
 mongoose.Promise = global.Promise;
 
