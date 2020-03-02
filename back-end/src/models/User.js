@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 const uniqueValidator = require('mongoose-unique-validator')
-const bcrypt = require('bcryptjs')
 
 const UserSchema = new Schema({
   username: {
@@ -9,7 +8,6 @@ const UserSchema = new Schema({
     unique: true,
     required: [true, 'Cannot be empty'],
     match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
-    index: false,
   },
   name: {
     type: String,
