@@ -9,31 +9,24 @@ body {
 }
 
 .wrap-registerForm {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* height: 100vh; */
+  /* display: flex; */
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 200px;
+  padding: 10px;
 }
 
 
 .registerForm {
-  width: 40%;
+  /* width: 40%;
   background-color: #fff;
   padding: 20px 60px 40px 60px;
-  box-shadow: -20px 22px 20px -16px rgba(0, 0, 0, 0.75);
-  border-radius: 5px;
+  /* box-shadow: -20px 22px 20px -16px rgba(0, 0, 0, 0.75); */
+  /* border-radius: 5px;
   text-align: center;
-  justify-content: space-between;
-}
-
-.formLegend {
-  font-family: 'Quicksand', sans-serif;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: normal;
-  letter-spacing: normal;
-  line-height: 22.5px;
-  text-transform: none;
+  justify-content: space-between; */ 
 }
 
 .buttons {
