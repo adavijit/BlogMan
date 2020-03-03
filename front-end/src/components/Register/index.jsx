@@ -6,12 +6,7 @@ import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { setAuthToken } from "..";
-
-import axios from "axios";
-import { API_BASE_URL } from '../../utils/constants';
-
-
-
+import { userRegister } from "../../services/user"
 
 class Register extends Component {
   constructor(props) {
@@ -54,13 +49,7 @@ class Register extends Component {
     };
 
 
-    return axios
-
-      .post(`${API_BASE_URL}/users/register`, {
-
-        user
-      })
-
+    userRegister({ user })
       .then(res => {
         if (res.data.error) {
           this.setState({
@@ -280,11 +269,6 @@ function UserDetails(props) {
     </Fragment>
   );
 }
-
-const styles = {
-  color: "red",
-  marginBottom: "15px"
-};
 
 const mapStateToProps = state => ({
   user: state.userRegister,

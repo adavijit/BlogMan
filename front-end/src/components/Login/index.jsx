@@ -1,17 +1,12 @@
 import React, { Component } from "react";
 import constants from "../../utils/constants";
-
 import { TextField, Button, Divider } from "@material-ui/core";
 import { Alert } from '@material-ui/lab';
-
 import { Link } from 'react-router-dom';
-
 import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { setAuthToken } from "..";
 import { userLogin } from "../../services/user"
-
-import { API_BASE_URL } from '../../utils/constants';
 
 class Login extends Component {
   constructor(props) {
@@ -45,14 +40,7 @@ class Login extends Component {
     };
 
 
-    return axios
-
-      .post(`${API_BASE_URL}/users/login`, {
-
-        user
-      })
-
-  
+    userLogin({ user })
       .then(res => {
         if (res.data.error) return console.warn(res);
         const { token } = res.data;
@@ -137,11 +125,6 @@ class Login extends Component {
     );
   }
 }
-
-const styles = {
-  color: "red",
-  marginBottom: "15px"
-};
 
 const mapStateToProps = state => ({
   user: state.username,
