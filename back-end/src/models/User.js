@@ -1,34 +1,71 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 const uniqueValidator = require('mongoose-unique-validator')
-const bcrypt = require('bcryptjs')
 
-const UserSchema = new Schema(
-    {
-        username: {
-            type: String,
-            unique: true,
-            required: [true, 'Cannot be empty'],
-            match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
-            index: true,
-        },
-        hash: { type: String, required: true },
-        name: String,
-        lastname: String,
-        birth: Date,
-        bio: String,
-    },
-    { timestamps: true }
-)
+const UserSchema = new Schema({
+  username: {
+    type: String,
+    unique: true,
+    required: [true, 'Cannot be empty'],
+    match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true,
+    match: [/^\w+[\w-\.]*\@\w+((-\w+)|(\w*))\.[a-z]{2,3}$/, 'invalid email'],
+  },
+  birth: {
+    type:Date,
+    default: Date.now,
+  },
+  bio: {
+    type: String,
+  },
+  interests: {
+    type: String,
+  },
+  postsLiked: {
+    type: String,
+  },
+  comments: {
+    body: String,
+    date: Date,
+  },
+  skills: {
+    type: String,
+  },
+  college: {
+    type: String,
+  },
+  searchInterests: {
+    type: String,
+  },
+  hash: { 
+    type: String, 
+    required: true, 
+  },
+}, {
+    timestamps: true,
+});
 
 UserSchema.methods.toJSON = function() {
-    const { _id, username, name, lastname, birth, createdAt, updatedAt } = this
+    const { _id, username, name, email, birth, comments, skills, interests, postsLiked, createdAt, updatedAt } = this
     return {
         _id,
         username,
         name,
-        lastname,
+        email,
         birth,
+        comments,
+        skills,
+        postsLiked,
+        interests,
         createdAt,
         updatedAt
     }

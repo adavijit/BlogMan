@@ -6,8 +6,12 @@ import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { setAuthToken } from "..";
+
 import axios from "axios";
 import { API_BASE_URL } from '../../utils/constants';
+
+
+
 
 class Register extends Component {
   constructor(props) {
@@ -49,12 +53,14 @@ class Register extends Component {
       birth
     };
 
+
     return axios
 
       .post(`${API_BASE_URL}/users/register`, {
 
         user
       })
+
       .then(res => {
         if (res.data.error) {
           this.setState({

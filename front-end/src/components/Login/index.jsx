@@ -7,9 +7,9 @@ import { Alert } from '@material-ui/lab';
 import { Link } from 'react-router-dom';
 
 import { connect } from "react-redux";
-import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { setAuthToken } from "..";
+import { userLogin } from "../../services/user"
 
 import { API_BASE_URL } from '../../utils/constants';
 
@@ -44,12 +44,15 @@ class Login extends Component {
       password
     };
 
+
     return axios
 
       .post(`${API_BASE_URL}/users/login`, {
 
         user
       })
+
+  
       .then(res => {
         if (res.data.error) return console.warn(res);
         const { token } = res.data;
@@ -64,13 +67,12 @@ class Login extends Component {
           });
           this.props.history.push("/", this.state);
         }
-      })
-      .catch(err => {
+    }).catch(error => {
         this.setState({
           hidden: false
         });
         this.props.history.push("/sign-in");
-      });
+    })
   }
 
   handleChange(key, event) {
