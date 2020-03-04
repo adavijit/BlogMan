@@ -40,7 +40,7 @@ class Login extends Component {
     };
 
 
-    userLogin({ user })
+    userLogin(user)
       .then(res => {
         if (res.data.error) return console.warn(res);
         const { token } = res.data;
