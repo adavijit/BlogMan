@@ -11,7 +11,7 @@ const {
 
 router.post("/login", async (req, res, next) => {
   let errors = {};
-  const { username, password } = req.body.user;
+  const { username, password } = req.body;
   await User.findOne({ username }).then(user => {
     if (!user) {
       errors.user = USER_NOT_FOUND;
@@ -48,21 +48,22 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.post("/register", async (req, res) => {
-  const { user } = req.body;
-  const { username, password } = user;
-  const response = {};
-
+  const { username, password, email, name, birth } = req.body;
   if (await User.findOne({ username })) {
     return res.json({ error: 'Username "' + username + '" is already taken' });
   }
 
-  const newUser = new User(user);
-
-  if (password) {
-    newUser.hash = bcrypt.hashSync(user.password, 10);
+  if (await User.findOne({ email })) {
+    return res.json({ error: 'Email "' + email + '" is already taken' });
   }
 
-  await newUser.save(user).then((user, err) => {
+  const newUser = new User({ username, email, name, birth: new Date(birth)  });
+
+  if (password) {
+    newUser.hash = bcrypt.hashSync(password, 10);
+  }
+
+  await newUser.save().then((user, err) => {
     bcrypt.compare(password, user.hash).then(isMatch => {
       if (isMatch) {
         const payload = {

@@ -16,9 +16,8 @@ class Register extends Component {
       step: 1,
       username: "",
       password: "",
+      email: "",
       name: "",
-      lastname: "",
-      bio: "",
       birth: "",
       isAuthenticated: false,
       error: "",
@@ -38,18 +37,16 @@ class Register extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { createUser, loginUser } = this.props;
-    const { username, password, name, lastname, bio, birth } = this.state;
+    const { username, password, name, email, birth } = this.state;
     const user = {
       username,
       password,
       name,
-      lastname,
-      bio,
-      birth
+      birth,
+      email
     };
 
-
-    userRegister({ user })
+    userRegister(user)
       .then(res => {
         if (res.data.error) {
           this.setState({
@@ -145,16 +142,15 @@ class Register extends Component {
     const {
       step,
       name,
-      lastname,
       birth,
       username,
       password,
-      bio,
       exists,
       hidden,
-      error
+      error,
+      email
     } = this.state;
-    const isEnabled = name && lastname && username && password;
+    const isEnabled = name && email && username && password;
     return (
       <div className="wrap-registerForm">
         <div className="registerForm">
@@ -170,7 +166,7 @@ class Register extends Component {
               step={step}
               handleChange={this.handleChange}
               name={name}
-              lastname={lastname}
+              email={email}
               birth={birth}
             />
             <UserDetails
@@ -178,7 +174,6 @@ class Register extends Component {
               handleChange={this.handleChange}
               username={username}
               password={password}
-              bio={bio}
             />
             <div className={step > 1 ? "buttons" : ""}>
               {this.prevBtn(isEnabled)}
@@ -212,10 +207,11 @@ function PersonalDetails(props) {
       />
       <br />
       <TextField
-        value={props.lastname}
-        label="Last Name*"
-        onChange={ev => props.handleChange("lastname", ev)}
-        name="lastname"
+        value={props.email}
+        label="Email*"
+        type="email"
+        onChange={ev => props.handleChange("email", ev)}
+        name="email"
         fullWidth
         margin="normal"
         variant="outlined"
