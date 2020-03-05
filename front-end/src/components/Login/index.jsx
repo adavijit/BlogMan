@@ -17,7 +17,8 @@ class Login extends Component {
       password: "",
       isAuthenticated: false,
       exists: false,
-      hidden: true
+      errors: {},
+      commonError: null
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,7 +39,10 @@ class Login extends Component {
       username,
       password
     };
-
+    this.setState({
+      errors: {},
+      commonError: null
+    })
 
     userLogin(user)
       .then(res => {
@@ -56,10 +60,11 @@ class Login extends Component {
           this.props.history.push("/", this.state);
         }
     }).catch(error => {
+        const len = Object.keys(error.data).length;
         this.setState({
-          hidden: false
+          errors: len > 0 ? error.data : {},
+          commonError: len <= 0 ? error.message : null
         });
-        this.props.history.push("/sign-in");
     })
   }
 
@@ -70,7 +75,7 @@ class Login extends Component {
   }
 
   render() {
-    const { username, password, exists, hidden } = this.state;
+    const { username, password, exists, commonError, errors } = this.state;
     const isEnabled = username && password;
     
     return (
@@ -80,9 +85,9 @@ class Login extends Component {
         <h2 className="signInHeading">Sign In</h2>
         <Divider style={{ marginBottom: '20px'}}/>
 
-        {!exists ? (
+        {!exists && commonError ? (
           
-          <Alert severity="error" hidden={hidden}>Sorry! User not found..</Alert>
+          <Alert severity="error">{ commonError }</Alert>
         ) : null}
         <form onSubmit={this.handleSubmit} autoComplete="off">
           <TextField
@@ -93,6 +98,8 @@ class Login extends Component {
             fullWidth
             margin="normal"
             variant="outlined"
+            error={!!errors.username}
+            helperText={errors.username}
           />
           <br />
           <TextField
@@ -104,6 +111,8 @@ class Login extends Component {
             margin="normal"
             type="password"
             variant="outlined"
+            error={!!errors.password}
+            helperText={errors.password}
           />
           <div style={{ textAlign: 'left', marginTop: '30px'}}>
             <Button
