@@ -2,6 +2,7 @@ const router = require('express').Router();
 const axios = require('axios');
 const querystring = require('querystring');
 
+const createController = require('../createController');
 const udemyClientId = process.env.UDEMY_CLIENT_ID || '';
 const udemyClientSecret = process.env.UDEMY_CLIENT_SECRET || '';
 const udemyAuthKey = Buffer.from(
@@ -14,8 +15,9 @@ const http = axios.create({
   },
 });
 
-router.get('/udemy', async (req, res, next) => {
-  try {
+router.get(
+  '/udemy',
+  createController(async (req, res, next) => {
     const fields = [
       'search',
       'price',
@@ -39,10 +41,7 @@ router.get('/udemy', async (req, res, next) => {
     if (!data) throw new Error('No data present');
 
     res.json({ courses: data.results });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send();
-  }
-});
+  }),
+);
 
 module.exports = router;

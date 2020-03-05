@@ -1,98 +1,93 @@
-const router = require("express").Router();
-const User = require("../../models/User");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const {
-  STATUS_OK,
-  USER_NOT_FOUND,
-  TOKEN_ERROR,
-  INCORRECT_PASSWORD
-} = require("../../utils/constants");
+const router = require('express').Router();
+const createError = require('http-errors');
+const createController = require('../createController');
+const User = require('../../models/User');
+const authValidator = require('../../validators/auth');
+const jwt = require('../../utils/jwt');
+const { USER_NOT_FOUND, INCORRECT_PASSWORD } = require('../../utils/constants');
 
-router.post("/login", async (req, res, next) => {
-  let errors = {};
-  const { username, password } = req.body;
-  await User.findOne({ username }).then(user => {
-    if (!user) {
-      errors.user = USER_NOT_FOUND;
-      return res.status(404).json(errors);
-    }
-    bcrypt.compare(password, user.hash).then(isMatch => {
-      if (isMatch) {
-        const payload = {
-          id: user._id,
-          username: user.username
-        };
-        jwt.sign(
-          payload,
-          process.env.SECRET,
-          {
-            expiresIn: 3600
+router.post(
+  '/login',
+  createController(
+    async (req, res) => {
+      const { username, password } = res.locals.inputBody;
+
+      const user = await User.findOne({ username });
+      if (!user)
+        throw new createError(404, USER_NOT_FOUND, {
+          errors: {
+            username: USER_NOT_FOUND,
           },
-          (err, token) => {
-            if (err) console.error(TOKEN_ERROR, err);
-            else {
-              res.json({
-                success: true,
-                token
-              });
-            }
-          }
-        );
-      } else {
-        errors.password = INCORRECT_PASSWORD;
-        return res.json(400).json(errors);
-      }
-    });
-  });
-});
-
-router.post("/register", async (req, res) => {
-  const { username, password, email, name, birth } = req.body;
-  if (await User.findOne({ username })) {
-    return res.json({ error: 'Username "' + username + '" is already taken' });
-  }
-
-  if (await User.findOne({ email })) {
-    return res.json({ error: 'Email "' + email + '" is already taken' });
-  }
-
-  const newUser = new User({ username, email, name, birth: new Date(birth)  });
-
-  if (password) {
-    newUser.hash = bcrypt.hashSync(password, 10);
-  }
-
-  await newUser.save().then((user, err) => {
-    bcrypt.compare(password, user.hash).then(isMatch => {
+        });
+      const isMatch = await user.checkPassword(password);
       if (isMatch) {
-        const payload = {
-          id: user._id,
-          username: user.username
-        };
-        jwt.sign(
-          payload,
-          process.env.SECRET,
-          {
-            expiresIn: 3600
-          },
-          (err, token) => {
-            if (err) console.error(TOKEN_ERROR, err);
-
-            return res.json({
-              status: STATUS_OK,
-              newUser: user,
-              success: true,
-              token
-            });
-          }
-        );
+        const token = await jwt.sign(user);
+        res.status(200).json({
+          token,
+        });
       } else {
-        errors.password = INCORRECT_PASSWORD;
-        return res.json(400).json(errors);
+        throw new createError(401, INCORRECT_PASSWORD, {
+          errors: { password: INCORRECT_PASSWORD },
+        });
       }
-    });
-  });
-});
+    },
+    {
+      validation: {
+        throwError: true,
+        asObject: true,
+        validators: [authValidator.login],
+      },
+      inputs: ['username', 'password'],
+    },
+  ),
+);
+
+router.post(
+  '/register',
+  createController(
+    async (req, res) => {
+      const body = res.locals.inputBody;
+
+      if (body.birth) {
+        body.birth = new Date(body.birth);
+      }
+
+      if (await User.findOne({ username: body.username })) {
+        throw new createError(409, 'This username aleady exists.', {
+          errors: {
+            username: `Username '${body.username}' is already taken.'`,
+          },
+        });
+      }
+
+      if (await User.findOne({ email: body.email })) {
+        throw new createError(409, 'This email aleady exists.', {
+          errors: {
+            email: `Email '${body.email}' is already taken.'`,
+          },
+        });
+      }
+
+      const newUser = new User(body);
+
+      await newUser.save();
+
+      const token = await jwt.sign(newUser);
+
+      res.status(201).json({
+        user: newUser,
+        token,
+      });
+    },
+    {
+      validation: {
+        throwError: true,
+        asObject: true,
+        validators: [authValidator.register],
+      },
+      inputs: ['name', 'username', ['password', 'hash'], 'email', 'birth'],
+    },
+  ),
+);
 
 module.exports = router;
