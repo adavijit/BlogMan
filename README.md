@@ -36,7 +36,7 @@ The build is minified and the filenames include the hashes.<br />
 
 
 
-##Guidelines while working on API
+# Guidelines while working on API
 
  We have layed out some guidelines for error handling on the backend. Kindly read and implement it when you're working on any API.
 
