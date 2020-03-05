@@ -21,7 +21,7 @@ class Register extends Component {
       birth: "",
       isAuthenticated: false,
       error: "",
-      hidden: true
+      errors: {},
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -45,17 +45,13 @@ class Register extends Component {
       birth,
       email
     };
+    this.setState({
+      error: "",
+      errors: {}
+    });
 
     userRegister(user)
       .then(res => {
-        if (res.data.error) {
-          this.setState({
-            error: res.data.error,
-            hidden: false
-          });
-          this.props.history.push("/sign-up");
-          return console.warn(res.data.error);
-        }
         createUser(res.data.userSaved);
         const { token } = res.data;
         console.log(token);
@@ -70,7 +66,13 @@ class Register extends Component {
           });
           this.props.history.push("/", this.state);
         }
-      });
+      }).catch(error => {
+        const len = Object.keys(error.data).length;
+        this.setState({
+          error: len > 0 ? error.data[Object.keys(error.data)[0]] : error.message,
+          errors: len > 0 ? error.data : {}
+        });
+    })
   }
 
   handleChange(key, event) {
@@ -146,9 +148,9 @@ class Register extends Component {
       username,
       password,
       exists,
-      hidden,
       error,
-      email
+      email,
+      errors
     } = this.state;
     const isEnabled = name && email && username && password;
     return (
@@ -157,9 +159,9 @@ class Register extends Component {
           
          <h2 className="signInHeading">Sign Up</h2>
           <Divider style={{ marginBottom: '20px'}}/>
-          {!exists ? (
+          {!exists && error ? (
           
-          <Alert severity="error" hidden={hidden}>{error}</Alert>
+          <Alert severity="error">{error}</Alert>
         ) : null}
           <form onSubmit={this.handleSubmit} autoComplete="off">
             <PersonalDetails
@@ -168,12 +170,14 @@ class Register extends Component {
               name={name}
               email={email}
               birth={birth}
+              errors={errors}
             />
             <UserDetails
               step={step}
               handleChange={this.handleChange}
               username={username}
               password={password}
+              errors={errors}
             />
             <div className={step > 1 ? "buttons" : ""}>
               {this.prevBtn(isEnabled)}
@@ -204,6 +208,7 @@ function PersonalDetails(props) {
         fullWidth
         margin="normal"
         variant="outlined"
+        error={!!props.errors.name}
       />
       <br />
       <TextField
@@ -215,6 +220,7 @@ function PersonalDetails(props) {
         fullWidth
         margin="normal"
         variant="outlined"
+        error={!!props.errors.email}
       />
       <br />
       <TextField
@@ -228,6 +234,7 @@ function PersonalDetails(props) {
         }}
         margin="normal"
         variant="outlined"
+        error={!!props.errors.birth}
       />
       <br />
     </Fragment>
@@ -249,6 +256,7 @@ function UserDetails(props) {
         fullWidth
         margin="normal"
         variant="outlined"
+        error={!!props.errors.username}
       />
       <br />
       <TextField
@@ -260,6 +268,7 @@ function UserDetails(props) {
         margin="normal"
         type="password"
         variant="outlined"
+        error={!!props.errors.password}
       />
       <br />
     </Fragment>
