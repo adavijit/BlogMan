@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { setAuthToken } from "..";
 import { userLogin } from "../../services/user"
+import { loginValidator } from "../../validators/auth"
 
 class Login extends Component {
   constructor(props) {
@@ -23,12 +24,29 @@ class Login extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.checkForm = this.checkForm.bind(this);
   }
 
   componentDidMount() {
     if (localStorage.getItem("user")) {
       this.props.history.push("/");
     }
+  }
+
+  checkForm() {
+    const { username, password } = this.state;
+    const body = {
+      username,
+      password
+    }
+    const { errors } = loginValidator.validate(body);
+    if(errors && Object.keys(errors).length > 0) {
+      this.setState({
+        errors: errors
+      })
+      return false;
+    }
+    return true;
   }
 
   handleSubmit(e) {
@@ -42,7 +60,9 @@ class Login extends Component {
     this.setState({
       errors: {},
       commonError: null
-    })
+    });
+
+    if(!this.checkForm()) return;
 
     userLogin(user)
       .then(res => {
