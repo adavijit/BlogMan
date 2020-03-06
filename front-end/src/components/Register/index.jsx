@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { setAuthToken } from "..";
 import { userRegister } from "../../services/user"
+import { registerValidator } from "../../validators/auth"
 
 class Register extends Component {
   constructor(props) {
@@ -26,12 +27,33 @@ class Register extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.checkForm = this.checkForm.bind(this);
   }
 
   componentDidMount() {
     if (localStorage.getItem("user")) {
       this.props.history.push("/");
     }
+  }
+
+  checkForm() {
+    const { name, username, password, email, birth } = this.state;
+    const body = {
+      name,
+      username,
+      password, 
+      email, 
+      birth
+    };
+    const { errors } = registerValidator.validate(body);
+    if(errors && Object.keys(errors).length > 0) {
+      this.setState({
+        errors: errors,
+        error: errors[Object.keys(errors)[0]],
+      })
+      return false;
+    }
+    return true;
   }
 
   handleSubmit(e) {
@@ -49,6 +71,8 @@ class Register extends Component {
       error: "",
       errors: {}
     });
+
+    if(!this.checkForm()) return;
 
     userRegister(user)
       .then(res => {
