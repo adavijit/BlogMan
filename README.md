@@ -53,7 +53,7 @@ If there is any pertaining issue, console displays "Mongoose connection failed".
 ## Contributing
 Please read contributing.md for details on our code of conduct, and the process for submitting pull requests to us.<br />
 
-# Guidelines while working on API
+## Guidelines while working on API
 
  We have layed out some guidelines for error handling on the backend. Kindly read and implement it when you're working on any API.
 
