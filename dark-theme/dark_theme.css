@@ -1,0 +1,222 @@
+body {
+    background: black;
+  }
+  
+  .glitch {
+    color: rgb(223, 191, 191);
+    position: relative;
+    font-size: 12vw;
+    margin: 70px 200px;
+     font-family: "Oswald", sans-serif;
+    font-style: italic;
+    animation: glitch 5s 5s infinite;
+    }
+  
+  .glitch::before {
+    content: attr(data-text);
+    position: absolute;
+    left: -2px;
+    text-shadow: -5px 0 magenta;
+    background: black;
+    overflow: hidden;
+    top: 0;
+    animation: noise-1 3s linear infinite alternate-reverse, glitch 5s 5.05s infinite;
+  }
+  
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 2px;
+    text-shadow: -5px 0 lightgreen;
+    background: black;
+    overflow: hidden;
+    top: 0;
+    animation: noise-2 3s linear infinite alternate-reverse, glitch 5s 5s infinite;
+  }
+  
+  @keyframes glitch {
+    1%{
+      transform: rotateX(10deg) skewX(90deg);
+    }
+    2%{
+      transform: rotateX(0deg) skewX(0deg);
+    }
+  }
+  
+  @keyframes noise-1 {
+    $steps: 30;
+    @for $i from 1 through $steps {
+      #{percentage($i*(1/$steps))} {
+        $top: random(100);
+        $bottom: random(101 - $top);
+        clip-path: inset(#{$top}px 0 #{$bottom}px 0);
+      }
+    }
+  }
+  
+  @keyframes noise-2 {
+    $steps: 30;
+    @for $i from 0 through $steps {
+      #{percentage($i*(1/$steps))} {
+        $top: random(100);
+        $bottom: random(101 - $top);
+        clip-path: inset(#{$top}px 0 #{$bottom}px 0);
+      }
+    }
+  }
+  
+  .scanlines {
+    overflow: hidden;
+    mix-blend-mode: difference;
+  }
+  
+  .scanlines::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 255, 255, 0.05) .5%,
+      transparent 1%
+    );
+  
+    animation: fudge 7s ease-in-out alternate infinite;
+  }
+  
+  @keyframes fudge {
+    from {
+      transform: translate(0px, 0px);
+    }
+    to {
+      transform: translate(0px, 2%);
+    }
+  }
+  
+  .glow {
+    @extend .glitch;
+    text-shadow: 0 0 1000px rgb(223, 191, 191);
+    color: transparent;
+    margin-top: -325px;
+  }
+  
+  .subtitle {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 100;
+    font-size: 1vw;
+    color: rgba(165, 141, 141, .4);
+    text-transform: uppercase;
+    letter-spacing: 1em;
+    text-align: center;
+    margin-top: -50px;
+    animation: glitch-2 5s 5.02s infinite;
+  }
+  
+  @keyframes glitch-2 {
+    1%{
+      transform: rotateX(10deg) skewX(70deg);
+    }
+    2%{
+      transform: rotateX(0deg) skewX(0deg);
+    }
+  }
+  
+  .welcome {
+      border-radius: 20px 20px 0 0;
+      background-color: #222;
+    height: 100%;
+    width: 70%;
+      color: #fff;
+      margin: auto;
+      padding: 15px 15px 25px 15px;
+    position: relative;
+    font-family: "Times New Roman", Times, serif;
+    font-size:27px;
+    text-align:center;
+  }
+  .welcome::before {
+    content: "";
+    position: absolute;
+    background-color: transparent;
+    bottom: 0;
+    left: -50px; /* MAKE SURE that this is equal to the width */
+    height: 25px;
+    width: 50px;
+    border-radius: 0 0 20px 0;
+    -webkit-box-shadow: 25px 0 0 0 #222;
+            box-shadow: 25px 0 0 0 #222
+  }
+  .welcome::after {
+    content: "";
+    position: absolute;
+    background-color: transparent;
+    bottom: 0;
+    right: -50px; /* MAKE SURE that this is equal to the width */
+    height: 25px;
+    width: 50px;
+    border-radius: 0 0 0 20px;
+    -webkit-box-shadow: -25px 0 0 0 #222;
+            box-shadow: -25px 0 0 0 #222
+  }
+  h1 {
+    text-align: center;
+   margin-top:212px;
+      position: relative;
+      color: rgba(0, 0, 0, .3);
+      font-size: 2.5em
+  }
+  h1:before {
+      content: attr(data-text);
+      position: absolute;
+      overflow: hidden;
+      max-width: 15em;
+      white-space: nowrap;
+      color: #fff;
+      animation: loading 8s linear;
+  }
+  @keyframes loading {
+    
+      0% {
+          max-width: 0;
+      }
+  }
+  .wave::after {
+      content: '✋';
+      --emoji: '👋';
+      animation-name: twoFrames;
+      animation-duration: 1s;
+  }
+  
+  .emoji {
+      font-size: calc(100px + 4vw);
+      min-width: 1.4em;
+      margin: 0.3em 0.4em;
+      text-align: center;
+  }
+  
+  .emoji::after {
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+  }
+  
+  @keyframes twoFrames {
+      50% {
+          content: var(--emoji);
+      }
+  }
+  
+
+  @keyframes threeFrames {
+      33.333% {
+          content: var(--emoji-1);
+      }
+  
+      66.666% {
+          content: var(--emoji-2);
+      }
+  }
+  
