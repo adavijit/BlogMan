@@ -1,0 +1,23 @@
+				IDEA SUGGESTIONS
+
+1. Search option with features like search via hashtag, keywords, category, levels(introductory, intermediate, advance).
+2. Most read blog on the top of the page
+3. Predicted read time associated with each blog.
+4. Career options in which user can add their skill set and when he enters it will show the possible career path with the user can persue along with course suggestions.
+5. Subscribe channel so that user can get the mail of recent blogs
+6. Everyday quote related to education and motivation
+7. Blogging constests
+8. Share option so that user can share a particular blog or course with friends.
+9. Blogging community channel where user can ask for doubts and if the doubts are not answered by other community members then within a time limit the expert has to answer the query. 
+10. Save or Star option so that user can save their favourite blogs or artlicles
+11. Reaction and Comment box below every blog so that user can post their suggestion and feedback
+12. Resume Building Tool in which user enters their details and get a perfect resume
+13. Virtual Interview Preparation for Interview Practices.
+14. Mock Tests associated with various courses.
+15. Current Affairs and Latest News sections
+16. Stress Reliever option where user can navigate and play games to refresh themselves
+17. Plans and Subscription for paid features
+18. Reminder option which give reminder via mail to complete course within deadline 
+
+
+ 
