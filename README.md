@@ -9,6 +9,13 @@
 
 BlogMan is a new social blogging platform where anybody can share their views and read other's opinion related to any topic. It is a way to connect with people and to know how the world is thinking.
 
+## Built With
+Mongo - Database
+Express - NodeJS Framework
+React - Frontend
+NodeJS - Backend
+CKEditor - Creating blogs
+
 ## Build Setup
 
 BlogMan is created using the Mongo, Express, React and NodeJS (MERN) stack.
@@ -22,7 +29,7 @@ In order to run the application:
 ### `npm start`
 
 Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
@@ -38,10 +45,26 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.<br />
 
+## MongoDB Connection
+Open "back-end/.env" to setup MongoDB environment and add your MongoDB URI, local or Atlas, client-id, client-secret and Youtube API key.<br />
+Console will display "Mongoose connected" if there are no issues with the connection.
+If there is any pertaining issue, console displays "Mongoose connection failed".<br />
 
+## Contributing
+Please read contributing.md for details on our code of conduct, and the process for submitting pull requests to us.<br />
 
 # Guidelines while working on API
 
  We have layed out some guidelines for error handling on the backend. Kindly read and implement it when you're working on any API.
 
 https://github.com/adavijit/BlogMan/pull/96#issue-384383423
+
+
+## Owner
+Avijit Das<br />
+
+## Mentors
+Avijit Das
+Rajat Upadhyay
+Pratham Dogra<br />
+
