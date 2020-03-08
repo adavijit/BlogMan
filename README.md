@@ -10,11 +10,11 @@
 BlogMan is a new social blogging platform where anybody can share their views and read other's opinion related to any topic. It is a way to connect with people and to know how the world is thinking.
 
 ## Built With
-Mongo - Database
-Express - NodeJS Framework
-React - Frontend
-NodeJS - Backend
-CKEditor - Creating blogs
+Mongo - Database<br />
+Express - NodeJS Framework<br />
+React - Frontend<br />
+NodeJS - Backend<br />
+CKEditor - Creating blogs<br />
 
 ## Build Setup
 
@@ -64,7 +64,7 @@ https://github.com/adavijit/BlogMan/pull/96#issue-384383423
 Avijit Das<br />
 
 ## Mentors
-Avijit Das
-Rajat Upadhyay
+Avijit Das<br />
+Rajat Upadhyay<br />
 Pratham Dogra<br />
 
