@@ -19,9 +19,6 @@ const BlogSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  tags: [{
-    type: String
-  }],
   likes: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -34,6 +31,9 @@ const BlogSchema = new Schema({
       ref: "Comment"
     }
   ],
+  tags: [{
+    type: String
+  }],
   source: [{
     type: String
   }]
