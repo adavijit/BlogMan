@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
-const cors = require("cors");
 const errorHandler = require("error-handler");
 const createError = require("http-errors");
 const mongoose = require("mongoose");
+const http = require("http");
+const { socketInit } = require("./src/controllers/socket");
+const initMiddleware = require("./src/middlewares/init");
 
 require("./src/models/User");
 require("./src/models/Blog");
@@ -17,10 +18,7 @@ app.set("port", process.env.PORT || 5000);
 
 require("dotenv").config();
 
-app.use(cors());
-app.use(require("morgan")("dev"));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(initMiddleware);
 
 if (!isProduction) app.use(errorHandler);
 
@@ -61,6 +59,9 @@ app.use((error, req, res, next) => {
   }
 });
 
-app.listen(app.get("port"), () => {
+const server = http.createServer(app);
+socketInit(server);
+
+server.listen(app.get("port"), () => {
   console.log(`Listening on port ${app.get("port")}`);
 });

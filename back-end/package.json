@@ -22,6 +22,8 @@
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.9.1",
     "request": "^2.88.2",
+    "socket.io": "^2.3.0",
+    "socketio-auth": "^0.1.1",
     "youtube-search": "^1.1.4"
   },
   "devDependencies": {
