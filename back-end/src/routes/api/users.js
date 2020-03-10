@@ -101,7 +101,7 @@ router.post(
           <body>
             <div class="container">
                 <h3>Howdy ${body.username}!</h3>
-                <p>Thanks for signing up at BlogMan. Hope you have fun exploring the coursers and blogs here.</p>
+                <p>Thanks for signing up at BlogMan. Hope you have fun exploring the courses and blogs here.</p>
                 <p>Keep learning, keep coding :)</p>
 
                 <div class="footer">
