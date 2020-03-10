@@ -5,11 +5,13 @@ import {
   getMessages,
   listenForMessages,
 } from '../../services/chat';
+import moment from 'moment';
 
 export default class ChatMessage extends Component {
   constructor(props) {
     super(props);
     this.userId = JSON.parse(localStorage.getItem('user')).id;
+    this.msgSectionRef = React.createRef();
     this.state = {
       newMessage: '',
       messages: [],
@@ -36,6 +38,7 @@ export default class ChatMessage extends Component {
         this.setState({
           messages: [...this.state.messages, message],
         });
+        this.scrollToBottom();
       }
     });
   }
@@ -82,11 +85,25 @@ export default class ChatMessage extends Component {
     getMessages(chat._id)
       .then((data) => {
         this.setState({ messages: data });
+        this.scrollToBottom();
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  scrollToBottom = () => {
+    if (this.msgSectionRef.current) {
+      const height = this.msgSectionRef.current.scrollHeight;
+      if (height) {
+        this.msgSectionRef.current.scroll(0, height);
+      }
+    }
+  };
+
+  formatDate = (date) => {
+    return moment(date).format('Do MMM, h:mm A')
+  }
 
   render() {
     const chat = this.props.selected;
@@ -106,7 +123,7 @@ export default class ChatMessage extends Component {
           )}
           {chat && (
             <React.Fragment>
-              <div className="chatMessages">
+              <div className="chatMessages" ref={this.msgSectionRef}>
                 {this.state.messages.map((msg) => {
                   const isMyMessage = this.userId === msg.user;
                   return (
@@ -118,7 +135,10 @@ export default class ChatMessage extends Component {
                       }
                       key={msg._id}
                     >
-                      <div className="chatMessage">{msg.text}</div>
+                      <div className="chatMessage">
+                        <div className="chatMessageText">{msg.text}</div>
+                        <div className="chatMessageTime">{this.formatDate(msg.createdAt)}</div>
+                      </div>
                     </div>
                   );
                 })}
