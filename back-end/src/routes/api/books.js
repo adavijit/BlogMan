@@ -1,14 +1,6 @@
+const router = require('express').Router();
+const controller = require('../../controllers/api/books');
 
-const router = require("express").Router();
-const request = require('request');
-
-router.post("/getBooks", async (req, res) => {
-    const query = req.body.bookQuery.split(/\s*\s/).join("+");
-  
-    request("https://www.googleapis.com/books/v1/volumes?q=" + query, {json: true}, (err, response, body) => {
-      if(err) { return console.log(err); }
-      return res.json(response);
-    });
-});
+router.get('/books', controller.get);
 
 module.exports = router;

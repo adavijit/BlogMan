@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const errorHandler = require("error-handler");
+const createError = require("http-errors");
 const mongoose = require("mongoose");
 
 require("./src/models/User");
@@ -39,6 +40,26 @@ mongoose
 mongoose.set("debug", true);
 
 app.use(require("./src/routes"));
+
+app.use("*", (req, res, next) => {
+  next(new createError(404, "Page not found."));
+});
+
+app.use((error, req, res, next) => {
+  if (error instanceof createError.HttpError) {
+    const obj = {
+      status: error.status,
+      message: error.message
+    };
+    if (error.errors) {
+      obj.errors = error.errors;
+    }
+    res.status(error.status).json(obj);
+  } else {
+    console.log(error);
+    res.status(500).json({  status: 500, message: 'Server error.' });
+  }
+});
 
 app.listen(app.get("port"), () => {
   console.log(`Listening on port ${app.get("port")}`);

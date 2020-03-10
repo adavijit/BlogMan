@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
-const { Schema } = mongoose
+const bcrypt = require('bcryptjs')
 const uniqueValidator = require('mongoose-unique-validator')
+const { Schema } = mongoose
 
 const UserSchema = new Schema({
   username: {
@@ -71,6 +72,41 @@ UserSchema.methods.toJSON = function() {
     }
 }
 
+const hashPassword = function(next) {
+  var user = this;
+  if (this.isModified('hash') || this.isNew) {
+    bcrypt.genSalt(10, function(err, salt) {
+      if (err) {
+        return next(err);
+      }
+      bcrypt.hash(user.hash, salt, function(err, hash) {
+        if (err) {
+          return next(err);
+        }
+        user.hash = hash;
+        next();
+      });
+    });
+  } else {
+    return next();
+  }
+}
+
+const checkPassword = async function(pass) {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(pass, this.hash, function(err, isMatch) {
+      if (err) {
+        reject(err);
+      }
+      resolve(isMatch);
+    });
+  });
+}
+  
 UserSchema.plugin(uniqueValidator, { message: 'is already taken.'})
+
+UserSchema.pre('save', hashPassword);
+
+UserSchema.methods.checkPassword = checkPassword;
 
 module.exports = mongoose.model('User', UserSchema)

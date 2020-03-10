@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { setAuthToken } from "..";
 import { userRegister } from "../../services/user"
+import { registerValidator } from "../../validators/auth"
 
 class Register extends Component {
   constructor(props) {
@@ -16,17 +17,17 @@ class Register extends Component {
       step: 1,
       username: "",
       password: "",
+      email: "",
       name: "",
-      lastname: "",
-      bio: "",
       birth: "",
       isAuthenticated: false,
       error: "",
-      hidden: true
+      errors: {},
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.checkForm = this.checkForm.bind(this);
   }
 
   componentDidMount() {
@@ -35,30 +36,46 @@ class Register extends Component {
     }
   }
 
+  checkForm() {
+    const { name, username, password, email, birth } = this.state;
+    const body = {
+      name,
+      username,
+      password, 
+      email, 
+      birth
+    };
+    const { errors } = registerValidator.validate(body);
+    if(errors && Object.keys(errors).length > 0) {
+      this.setState({
+        errors: errors,
+        error: errors[Object.keys(errors)[0]],
+      })
+      return false;
+    }
+    return true;
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     const { createUser, loginUser } = this.props;
-    const { username, password, name, lastname, bio, birth } = this.state;
+    const { username, password, name, email, birth } = this.state;
     const user = {
       username,
       password,
       name,
-      lastname,
-      bio,
-      birth
+      birth,
+      email
     };
+    this.setState({
+      error: "",
+      errors: {}
+    });
 
+    if(!this.checkForm()) return;
 
-    userRegister({ user })
+    userRegister(user)
       .then(res => {
-        if (res.data.error) {
-          this.setState({
-            error: res.data.error,
-            hidden: false
-          });
-          this.props.history.push("/sign-up");
-          return console.warn(res.data.error);
-        }
         createUser(res.data.userSaved);
         const { token } = res.data;
         console.log(token);
@@ -73,7 +90,13 @@ class Register extends Component {
           });
           this.props.history.push("/", this.state);
         }
-      });
+      }).catch(error => {
+        const len = Object.keys(error.data).length;
+        this.setState({
+          error: len > 0 ? error.data[Object.keys(error.data)[0]] : error.message,
+          errors: len > 0 ? error.data : {}
+        });
+    })
   }
 
   handleChange(key, event) {
@@ -145,40 +168,40 @@ class Register extends Component {
     const {
       step,
       name,
-      lastname,
       birth,
       username,
       password,
-      bio,
       exists,
-      hidden,
-      error
+      error,
+      email,
+      errors
     } = this.state;
-    const isEnabled = name && lastname && username && password;
+    const isEnabled = name && email && username && password;
     return (
       <div className="wrap-registerForm">
         <div className="registerForm">
           
          <h2 className="signInHeading">Sign Up</h2>
           <Divider style={{ marginBottom: '20px'}}/>
-          {!exists ? (
+          {!exists && error ? (
           
-          <Alert severity="error" hidden={hidden}>{error}</Alert>
+          <Alert severity="error">{error}</Alert>
         ) : null}
           <form onSubmit={this.handleSubmit} autoComplete="off">
             <PersonalDetails
               step={step}
               handleChange={this.handleChange}
               name={name}
-              lastname={lastname}
+              email={email}
               birth={birth}
+              errors={errors}
             />
             <UserDetails
               step={step}
               handleChange={this.handleChange}
               username={username}
               password={password}
-              bio={bio}
+              errors={errors}
             />
             <div className={step > 1 ? "buttons" : ""}>
               {this.prevBtn(isEnabled)}
@@ -209,16 +232,19 @@ function PersonalDetails(props) {
         fullWidth
         margin="normal"
         variant="outlined"
+        error={!!props.errors.name}
       />
       <br />
       <TextField
-        value={props.lastname}
-        label="Last Name*"
-        onChange={ev => props.handleChange("lastname", ev)}
-        name="lastname"
+        value={props.email}
+        label="Email*"
+        type="email"
+        onChange={ev => props.handleChange("email", ev)}
+        name="email"
         fullWidth
         margin="normal"
         variant="outlined"
+        error={!!props.errors.email}
       />
       <br />
       <TextField
@@ -232,6 +258,7 @@ function PersonalDetails(props) {
         }}
         margin="normal"
         variant="outlined"
+        error={!!props.errors.birth}
       />
       <br />
     </Fragment>
@@ -253,6 +280,7 @@ function UserDetails(props) {
         fullWidth
         margin="normal"
         variant="outlined"
+        error={!!props.errors.username}
       />
       <br />
       <TextField
@@ -264,6 +292,7 @@ function UserDetails(props) {
         margin="normal"
         type="password"
         variant="outlined"
+        error={!!props.errors.password}
       />
       <br />
     </Fragment>
