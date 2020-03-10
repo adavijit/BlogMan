@@ -2,12 +2,20 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const passport = require("passport");
 const errorHandler = require("error-handler");
 const createError = require("http-errors");
 const mongoose = require("mongoose");
+const auth = require("./auth/auth");
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
+
+auth(passport);
+app.use(passport.initialize());
 
 require("./src/models/User");
 require("./src/models/Blog");
+
 
 mongoose.Promise = global.Promise;
 
@@ -21,11 +29,16 @@ app.use(cors());
 app.use(require("morgan")("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieSession({
+  name: 'session',
+  keys: ['123']
+}));
+app.use(cookieParser());
 
 if (!isProduction) app.use(errorHandler);
 
 mongoose
-  .connect(process.env.MONGO_URL_LOCAL, {
+  .connect(process.env.MONGO_URL_CLOUD, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -60,6 +73,31 @@ app.use((error, req, res, next) => {
     res.status(500).json({  status: 500, message: 'Server error.' });
   }
 });
+
+app.get('/', (req, res) => {
+  if (req.session.token) {
+      res.cookie('token', req.session.token);
+      res.json({
+          status: 'session cookie set'
+      });
+  } else {
+      res.cookie('token', '')
+      res.json({
+          status: 'session cookie not set'
+      });
+  }
+});
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile'] }));
+
+app.get('/auth/google/secrets', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
 
 app.listen(app.get("port"), () => {
   console.log(`Listening on port ${app.get("port")}`);

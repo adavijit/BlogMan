@@ -13,6 +13,8 @@
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
@@ -22,7 +24,13 @@
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.9.1",
 
+
     "nodemailer": "^6.4.4",
+
+    "passport": "^0.4.1",
+    "passport-google-oauth": "^2.0.0",
+    "passport-google-oauth20": "^2.0.0",
+
     "request": "^2.88.2",
     "youtube-search": "^1.1.4"
 
