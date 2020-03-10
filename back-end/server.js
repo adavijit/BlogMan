@@ -7,15 +7,14 @@ const errorHandler = require("error-handler");
 const createError = require("http-errors");
 const mongoose = require("mongoose");
 const auth = require("./auth/auth");
-const cookieParser = require('cookie-parser');
-const cookieSession = require('cookie-session');
+const cookieParser = require("cookie-parser");
+const cookieSession = require("cookie-session");
 
 auth(passport);
 app.use(passport.initialize());
 
 require("./src/models/User");
 require("./src/models/Blog");
-
 
 mongoose.Promise = global.Promise;
 
@@ -29,27 +28,32 @@ app.use(cors());
 app.use(require("morgan")("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cookieSession({
-  name: 'session',
-  keys: ['123']
-}));
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["123"]
+  })
+);
 app.use(cookieParser());
 
 if (!isProduction) app.use(errorHandler);
 
-mongoose
-  .connect(process.env.MONGO_URL_CLOUD, {
+mongoose.connect(
+  process.env.MONGO_URL_LOCAL,
+  {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
     useFindAndModify: false
-  }, (error) => {
-  if(error) {
-    console.log("Mongoose connection failed");
-    throw error;
+  },
+  error => {
+    if (error) {
+      console.log("Mongoose connection failed");
+      throw error;
+    }
+    console.log("Mongoose connected");
   }
-  console.log('Mongoose connected')
-});
+);
 mongoose.set("debug", true);
 
 app.use(require("./src/routes"));
@@ -70,34 +74,37 @@ app.use((error, req, res, next) => {
     res.status(error.status).json(obj);
   } else {
     console.log(error);
-    res.status(500).json({  status: 500, message: 'Server error.' });
+    res.status(500).json({ status: 500, message: "Server error." });
   }
 });
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   if (req.session.token) {
-      res.cookie('token', req.session.token);
-      res.json({
-          status: 'session cookie set'
-      });
+    res.cookie("token", req.session.token);
+    res.json({
+      status: "session cookie set"
+    });
   } else {
-      res.cookie('token', '')
-      res.json({
-          status: 'session cookie not set'
-      });
+    res.cookie("token", "");
+    res.json({
+      status: "session cookie not set"
+    });
   }
 });
 
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }));
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
 
-app.get('/auth/google/secrets', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
+app.get(
+  "/auth/google/secrets",
+  passport.authenticate("google", { failureRedirect: "/login" }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/');
-  });
-
+    res.redirect("/");
+  }
+);
 
 app.listen(app.get("port"), () => {
   console.log(`Listening on port ${app.get("port")}`);

@@ -1,9 +1,9 @@
-const createError = require('http-errors');
-const createController = require('../createController');
-const User = require('../../models/User');
-const authValidator = require('../../validators/auth');
-const jwt = require('../../utils/jwt');
-const { USER_NOT_FOUND, INCORRECT_PASSWORD } = require('../../utils/constants');
+const createError = require("http-errors");
+const createController = require("../createController");
+const User = require("../../models/User");
+const authValidator = require("../../validators/auth");
+const jwt = require("../../utils/jwt");
+const { USER_NOT_FOUND, INCORRECT_PASSWORD } = require("../../utils/constants");
 
 module.exports = {
   login: createController(
@@ -14,18 +14,18 @@ module.exports = {
       if (!user)
         throw new createError(404, USER_NOT_FOUND, {
           errors: {
-            username: USER_NOT_FOUND,
-          },
+            username: USER_NOT_FOUND
+          }
         });
       const isMatch = await user.checkPassword(password);
       if (isMatch) {
         const token = await jwt.sign(user);
         res.status(200).json({
-          token,
+          token
         });
       } else {
         throw new createError(401, INCORRECT_PASSWORD, {
-          errors: { password: INCORRECT_PASSWORD },
+          errors: { password: INCORRECT_PASSWORD }
         });
       }
     },
@@ -33,10 +33,10 @@ module.exports = {
       validation: {
         throwError: true,
         asObject: true,
-        validators: [authValidator.login],
+        validators: [authValidator.login]
       },
-      inputs: ['username', 'password'],
-    },
+      inputs: ["username", "password"]
+    }
   ),
 
   register: createController(
@@ -48,18 +48,18 @@ module.exports = {
       }
 
       if (await User.findOne({ username: body.username })) {
-        throw new createError(409, 'This username aleady exists.', {
+        throw new createError(409, "This username aleady exists.", {
           errors: {
-            username: `Username '${body.username}' is already taken.'`,
-          },
+            username: `Username '${body.username}' is already taken.'`
+          }
         });
       }
 
       if (await User.findOne({ email: body.email })) {
-        throw new createError(409, 'This email aleady exists.', {
+        throw new createError(409, "This email aleady exists.", {
           errors: {
-            email: `Email '${body.email}' is already taken.'`,
-          },
+            email: `Email '${body.email}' is already taken.'`
+          }
         });
       }
 
@@ -71,16 +71,16 @@ module.exports = {
 
       res.status(201).json({
         user: newUser,
-        token,
+        token
       });
     },
     {
       validation: {
         throwError: true,
         asObject: true,
-        validators: [authValidator.register],
+        validators: [authValidator.register]
       },
-      inputs: ['name', 'username', ['password', 'hash'], 'email', 'birth'],
-    },
-  ),
-}
+      inputs: ["name", "username", ["password", "hash"], "email", "birth"]
+    }
+  )
+};
