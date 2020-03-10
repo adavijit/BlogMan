@@ -1,0 +1,301 @@
+body {
+    background: black;
+  
+  }
+  
+  .container {
+     font-family: "Oswald", sans-serif;
+    font-style: italic;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 40%;
+    left: 50%;
+  }
+  
+  .glitch {
+    color: rgb(223, 191, 191);
+    position: relative;
+    font-size: 9vw;
+     margin: 70px 200px;
+    animation: glitch 5s 5s infinite;
+  }
+  
+  .glitch::before {
+    content: attr(data-text);
+    position: absolute;
+    left: -2px;
+    text-shadow: -5px 0 magenta;
+    background: black;
+    overflow: hidden;
+    top: 0;
+    animation: noise-1 3s linear infinite alternate-reverse, glitch 5s 5.05s infinite;
+  }
+  
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 2px;
+    text-shadow: -5px 0 lightgreen;
+    background: black;
+    overflow: hidden;
+    top: 0;
+    animation: noise-2 3s linear infinite alternate-reverse, glitch 5s 5s infinite;
+  }
+  
+  @keyframes glitch {
+    1%{
+      transform: rotateX(10deg) skewX(90deg);
+    }
+    2%{
+      transform: rotateX(0deg) skewX(0deg);
+    }
+  }
+  
+  @keyframes noise-1 {
+    $steps: 30;
+    @for $i from 1 through $steps {
+      #{percentage($i*(1/$steps))} {
+        $top: random(100);
+        $bottom: random(101 - $top);
+        clip-path: inset(#{$top}px 0 #{$bottom}px 0);
+      }
+    }
+  }
+  
+  @keyframes noise-2 {
+    $steps: 30;
+    @for $i from 0 through $steps {
+      #{percentage($i*(1/$steps))} {
+        $top: random(100);
+        $bottom: random(101 - $top);
+        clip-path: inset(#{$top}px 0 #{$bottom}px 0);
+      }
+    }
+  }
+  
+  .scanlines {
+    overflow: hidden;
+    mix-blend-mode: difference;
+  }
+  
+  .scanlines::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 255, 255, 0.05) .5%,
+      transparent 1%
+    );
+  
+    animation: fudge 7s ease-in-out alternate infinite;
+  }
+  
+  
+  @keyframes fudge {
+    from {
+      transform: translate(0px, 0px);
+    }
+    to {
+      transform: translate(0px, 2%);
+    }
+  }
+  
+  .glow {
+    @extend .glitch;
+    text-shadow: 0 0 1000px rgb(223, 191, 191);
+    color: transparent;
+    position: absolute;
+    top: 0;
+  }
+  
+  .subtitle {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 100;
+    font-size: .9vw;
+    color: rgba(165, 141, 141, .4);
+    text-transform: uppercase;
+    letter-spacing: 1em;
+    text-align: center;
+  
+    left: 17%;
+    animation: glitch-2 5s 5.02s infinite;
+  }
+  
+  @keyframes glitch-2 {
+    1%{
+      transform: rotateX(10deg) skewX(70deg);
+    }
+    2%{
+      transform: rotateX(0deg) skewX(0deg);
+    }
+  }
+  
+  .animated {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      min-height: 100vh;
+    margin-top: 141px;
+  }
+  .emoji {
+      font-size: calc(100px + 4vw);
+      min-width: 1.4em;
+      margin: 0.3em 0.4em;
+      text-align: center;
+  }
+  
+  .emoji::after {
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+  }
+  .earth::after {
+      content: '🌎';
+      --emoji-1: '🌍';
+      --emoji-2: '🌏';
+      animation-name: threeFrames;
+      animation-duration: 1.5s;
+  }
+  .hearts::after {
+      content: '💗';
+      animation-name: hearts;
+      animation-duration: 3s;
+  }
+  
+  .wave::after {
+      content: '✋';
+      --emoji: '👋';
+      animation-name: twoFrames;
+      animation-duration: 1s;
+  }@keyframes twoFrames {
+      50% {
+          content: var(--emoji);
+      }
+  }
+  
+  @keyframes threeFrames {
+      33.333% {
+          content: var(--emoji-1);
+      }
+  
+      66.666% {
+          content: var(--emoji-2);
+      }
+  }
+  @keyframes hearts {
+      16.666% {
+          content: '🧡';
+      }
+  
+      33.333% {
+          content: '💛';
+      }
+  
+      50% {
+          content: '💚';
+      }
+  
+      66.666% {
+          content: '💙';
+      }
+  
+      83.333% {
+          content: '💜';
+      }
+  }
+  .welcome {
+      border-radius: 20px 20px 0 0;
+      background-color: #222;
+    height: 100%;
+    width: 70%;
+      color: #fff;
+      margin: auto;
+      padding: 15px 15px 25px 15px;
+    position: relative;
+    font-family: "Times New Roman", Times, serif;
+    font-size:27px;
+    text-align:center;
+  }
+  .blog{
+    font-family: Arial;
+    padding: 50px;
+  }
+  .header {
+    font-size: 36px;
+    text-align: center;
+     border-radius: 50px;
+    border: 5px solid #b6ff82;
+     margin-left:70px;
+     margin-right:70px;
+    text-shadow: 3px 2px red;
+    color:white;
+    
+  }
+  /* Create two unequal columns that floats next to each other */
+  /* Left column */
+  .leftcolumn {   
+    float: left;
+    border-radius: 50px 20px;
+    width: 75%;
+  }
+  
+  /* Right column */
+  .rightcolumn {
+    float: left;
+    width: 25%;
+    padding-left: 20px;
+  }
+  /* Fake image */
+  .fakeimg {
+    background-color: #aac;
+    width: 100%;
+    padding: 10px;
+  }
+  /* Add a card effect for articles */
+  .card {
+    border: 4.2px solid #c41f96;
+     padding: 20px;
+     margin-top: 20px;
+    border-radius: 40px 20px;
+    color:white;
+  }
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Footer */
+  .footer {
+    padding: 2px;
+    text-align: center;
+    border: 4px dotted #51edac;
+    margin-top: 20px;
+    color:white;
+  }
+  
+  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 800px) {
+    .leftcolumn, .rightcolumn {   
+      width: 100%;
+      padding: 0;
+    }
+  }
+  * {
+    box-sizing: border-box;
+  }
+  h2{
+     text-shadow: 3px 2px red;
+  }
+  h5{
+    font-size:18px;
+    text-shadow: 3px 2px #a751ed;
+  }

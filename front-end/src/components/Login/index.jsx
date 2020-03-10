@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { setAuthToken } from "..";
 import { userLogin } from "../../services/user"
+import { loginValidator } from "../../validators/auth"
 
 class Login extends Component {
   constructor(props) {
@@ -17,17 +18,35 @@ class Login extends Component {
       password: "",
       isAuthenticated: false,
       exists: false,
-      hidden: true
+      errors: {},
+      commonError: null
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.checkForm = this.checkForm.bind(this);
   }
 
   componentDidMount() {
     if (localStorage.getItem("user")) {
       this.props.history.push("/");
     }
+  }
+
+  checkForm() {
+    const { username, password } = this.state;
+    const body = {
+      username,
+      password
+    }
+    const { errors } = loginValidator.validate(body);
+    if(errors && Object.keys(errors).length > 0) {
+      this.setState({
+        errors: errors
+      })
+      return false;
+    }
+    return true;
   }
 
   handleSubmit(e) {
@@ -38,9 +57,14 @@ class Login extends Component {
       username,
       password
     };
+    this.setState({
+      errors: {},
+      commonError: null
+    });
 
+    if(!this.checkForm()) return;
 
-    userLogin({ user })
+    userLogin(user)
       .then(res => {
         if (res.data.error) return console.warn(res);
         const { token } = res.data;
@@ -56,10 +80,11 @@ class Login extends Component {
           this.props.history.push("/", this.state);
         }
     }).catch(error => {
+        const len = Object.keys(error.data).length;
         this.setState({
-          hidden: false
+          errors: len > 0 ? error.data : {},
+          commonError: len <= 0 ? error.message : null
         });
-        this.props.history.push("/sign-in");
     })
   }
 
@@ -70,7 +95,7 @@ class Login extends Component {
   }
 
   render() {
-    const { username, password, exists, hidden } = this.state;
+    const { username, password, exists, commonError, errors } = this.state;
     const isEnabled = username && password;
     
     return (
@@ -80,9 +105,9 @@ class Login extends Component {
         <h2 className="signInHeading">Sign In</h2>
         <Divider style={{ marginBottom: '20px'}}/>
 
-        {!exists ? (
+        {!exists && commonError ? (
           
-          <Alert severity="error" hidden={hidden}>Sorry! User not found..</Alert>
+          <Alert severity="error">{ commonError }</Alert>
         ) : null}
         <form onSubmit={this.handleSubmit} autoComplete="off">
           <TextField
@@ -93,6 +118,8 @@ class Login extends Component {
             fullWidth
             margin="normal"
             variant="outlined"
+            error={!!errors.username}
+            helperText={errors.username}
           />
           <br />
           <TextField
@@ -104,6 +131,8 @@ class Login extends Component {
             margin="normal"
             type="password"
             variant="outlined"
+            error={!!errors.password}
+            helperText={errors.password}
           />
           <div style={{ textAlign: 'left', marginTop: '30px'}}>
             <Button
