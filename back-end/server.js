@@ -14,8 +14,8 @@ mongoose.Promise = global.Promise;
 
 const isProduction = process.env.NODE_ENV === "production";
 
+app.use(express.static('public'))
 app.set("port", process.env.PORT || 5000);
-
 require("dotenv").config();
 
 app.use(initMiddleware);

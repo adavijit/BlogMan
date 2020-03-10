@@ -54,8 +54,35 @@
     flex-grow: 1;
     background-color: white;
     display: flex;
-    height: 400px;
+    height: 500px;
     flex-direction: column;
+    position: relative;
+
+    .chatImagePreviewContainer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: #ddd;
+      height: 440px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+
+      .chatImagePreview {
+        height: 300px;
+        width: auto;
+      }
+
+      .chatImagePreviewClose {
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin: 15px;
+      }
+    }
+
     .chatMessages {
       flex-grow: 1;
       padding: 15px;
@@ -73,6 +100,12 @@
             background-color: #ddd;
             padding: 10px;
             border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            .chatMessageImage {
+              width: 250px;
+              height: auto;
+            }
           }
 
           .chatMessageTime {
