@@ -148,6 +148,9 @@ class Login extends Component {
           <div>
             Don't have an account? <Link to="/sign-up"> Sign Up </Link>
           </div>
+          <div>
+            Login with Google <Link to="/auth/google"> SignIn</Link>
+          </div>
         </form>
       </div>
     </div>
