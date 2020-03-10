@@ -1,4 +1,5 @@
 const router = require('express').Router();
+
 const createError = require('http-errors');
 const createController = require('../createController');
 const User = require('../../models/User');
@@ -9,6 +10,11 @@ const jwt = require('../../utils/jwt');
 const nodemailer = require('nodemailer');
 
 const { USER_NOT_FOUND, INCORRECT_PASSWORD } = require('../../utils/constants');
+
+const controller = require('../../controllers/api/users');
+
+router.post('/login', controller.login);
+router.post('/register', controller.register);
 
 router.post(
   '/login',
@@ -174,5 +180,8 @@ router.post(
     },
   ),
 );
+
+
+
 
 module.exports = router;
