@@ -15,7 +15,8 @@ const ContentSchema = new Schema({
   },
   tags: [String],
   link: String,
-  uploadedBy: String
+  uploadedBy: String,
+  language: [String]
 });
 
 module.exports = mongoose.model("Content", ContentSchema);
