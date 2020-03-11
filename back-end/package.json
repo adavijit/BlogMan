@@ -23,11 +23,17 @@
     "mongoose": "^5.7.5",
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.9.1",
+
+
+    "nodemailer": "^6.4.4",
+
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
     "passport-google-oauth20": "^2.0.0",
+
     "request": "^2.88.2",
     "youtube-search": "^1.1.4"
+
   },
   "devDependencies": {
     "error-handler": "^1.0.0"
