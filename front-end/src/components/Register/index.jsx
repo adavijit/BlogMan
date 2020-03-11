@@ -78,7 +78,6 @@ class Register extends Component {
       .then(res => {
         createUser(res.data.userSaved);
         const { token } = res.data;
-        console.log(token);
         setAuthToken(token);
         const decoded = jwt_decode(token);
         loginUser(decoded);
