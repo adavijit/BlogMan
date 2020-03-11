@@ -7,6 +7,7 @@ import http from './http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 const baseURL = `${process.env.REACT_APP_API}/chat`;
+const socketURL = process.env.REACT_APP_SERVER;
 const getSocketConnection = new BehaviorSubject(null);
 
 export const getChat = async () => {
@@ -42,7 +43,7 @@ export const getMessages = async (chatId) => {
 export const connectSocket = async () => {
   return new Promise(async (resolve, reject) => {
     const token = localStorage.getItem('token_id');
-    const socket = io.connect('http://localhost:5000');
+    const socket = io.connect(socketURL);
     getSocketConnection.next(socket);
     socket.on('connect', () => {
       socket.emit('authentication', { token });
@@ -68,16 +69,18 @@ export const disconnectSocket = () => {
   }
 };
 
-export const sendMessage = async ({ chatId, message }) => {
+export const sendMessage = async ({ chatId, body }) => {
   return new Promise(async (resolve, reject) => {
-    const socket = getSocketConnection.value;
-    socket.emit('message', { chatId, message }, (data, error) => {
-      if (error) {
-        reject(error);
+    try {
+      const res = await http.post(`${baseURL}/${chatId}`, body);
+      if (res && res.data) {
+        resolve(res.data.message);
       } else {
-        resolve(data);
+        throw new Error('No data');
       }
-    });
+    } catch (error) {
+      reject(error);
+    }
   });
 };
 

@@ -5,15 +5,22 @@ import {
   getMessages,
   listenForMessages,
 } from '../../services/chat';
+import moment from 'moment';
 
 export default class ChatMessage extends Component {
   constructor(props) {
     super(props);
     this.userId = JSON.parse(localStorage.getItem('user')).id;
+    this.msgSectionRef = React.createRef();
+    this.imageInputRef = React.createRef();
+    this.baseUrl = process.env.REACT_APP_SERVER;
     this.state = {
       newMessage: '',
       messages: [],
       chat: null,
+      isLoading: false,
+      image: null,
+      imageSrc: null,
     };
   }
 
@@ -36,6 +43,7 @@ export default class ChatMessage extends Component {
         this.setState({
           messages: [...this.state.messages, message],
         });
+        this.scrollToBottom();
       }
     });
   }
@@ -58,13 +66,18 @@ export default class ChatMessage extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
+    const form = new FormData();
+    form.append('message', this.state.newMessage);
+    if (this.state.image) form.append('image', this.state.image);
     sendMessage({
       chatId: this.props.selected._id,
-      message: this.state.newMessage,
+      body: form,
     })
       .then(() => {
         this.setState({
           newMessage: '',
+          image: null,
+          imageSrc: null,
         });
       })
       .catch((error) => {
@@ -82,15 +95,53 @@ export default class ChatMessage extends Component {
     getMessages(chat._id)
       .then((data) => {
         this.setState({ messages: data });
+        this.scrollToBottom();
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
+  scrollToBottom = () => {
+    if (this.msgSectionRef.current) {
+      const height = this.msgSectionRef.current.scrollHeight;
+      if (height) {
+        this.msgSectionRef.current.scroll(0, height);
+      }
+    }
+  };
+
+  formatDate = (date) => {
+    return moment(date).format('Do MMM, h:mm A');
+  };
+
+  onImageSelect = () => {
+    if (this.imageInputRef.current) {
+      const files = Array.from(this.imageInputRef.current.files);
+      if (files && files.length > 0) {
+        const file = files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          this.setState({
+            imageSrc: reader.result,
+          });
+        };
+        this.setState({ image: file });
+      }
+    }
+  };
+
+  resetImage = () => {
+    this.setState({
+      image: null,
+      imageSrc: null,
+    });
+  };
+
   render() {
     const chat = this.props.selected;
-    const isEnabled = chat && this.state.newMessage;
+    const isEnabled = chat && (this.state.newMessage || this.state.image);
 
     return (
       <div className="chatContainer">
@@ -104,9 +155,32 @@ export default class ChatMessage extends Component {
               <div>Select a Chat.</div>
             </div>
           )}
+          {this.state.imageSrc && (
+            <div className="chatImagePreviewContainer">
+              <button
+                className="btn btn-link chatImagePreviewClose"
+                onClick={this.resetImage}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                >
+                  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                  <path d="M0 0h24v24H0z" fill="none" />
+                </svg>
+              </button>
+              <img
+                alt="Preview"
+                className="chatImagePreview"
+                src={this.state.imageSrc}
+              ></img>
+            </div>
+          )}
           {chat && (
             <React.Fragment>
-              <div className="chatMessages">
+              <div className="chatMessages" ref={this.msgSectionRef}>
                 {this.state.messages.map((msg) => {
                   const isMyMessage = this.userId === msg.user;
                   return (
@@ -118,7 +192,21 @@ export default class ChatMessage extends Component {
                       }
                       key={msg._id}
                     >
-                      <div className="chatMessage">{msg.text}</div>
+                      <div className="chatMessage">
+                        <div className="chatMessageText">
+                          {msg.image && (
+                            <img
+                              src={`${this.baseUrl}/${msg.image}`}
+                              alt="Chat message"
+                              className={msg.text ? "chatMessageImage mb-2" : "chatMessageImage"}
+                            ></img>
+                          )}
+                          <span>{msg.text}</span>
+                        </div>
+                        <div className="chatMessageTime">
+                          {this.formatDate(msg.createdAt)}
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
@@ -129,7 +217,27 @@ export default class ChatMessage extends Component {
                   value={this.state.newMessage}
                   onChange={this.onChange}
                 ></input>
+                <label className="chatInputImage">
+                  <input
+                    type="file"
+                    className="d-none"
+                    onChange={this.onImageSelect}
+                    ref={this.imageInputRef}
+                  />
+                  <div className="btn btn-link" style={{ cursor: 'pointer' }}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                    >
+                      <path d="M19 7v2.99s-1.99.01-2 0V7h-3s.01-1.99 0-2h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z" />
+                      <path d="M0 0h24v24H0z" fill="none" />
+                    </svg>
+                  </div>
+                </label>
                 <Button
+                  type="submit"
                   color="primary"
                   size="medium"
                   variant="contained"
