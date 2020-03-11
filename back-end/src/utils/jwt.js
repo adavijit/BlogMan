@@ -27,3 +27,13 @@ module.exports.sign = async (user) => {
     }
   });
 };
+
+module.exports.verify = (JWTtoken) => {
+  try {
+    const tokenData = jwt.verify(JWTtoken, process.env.SECRET);
+    return tokenData;
+  } catch (error) {
+    console.log(error);
+    return {};
+  }
+};
