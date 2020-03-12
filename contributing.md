@@ -23,6 +23,7 @@
    **npm install** 
 * Start the server
    **npm start**
+* Head back to the main directory.
    **cd ..**
 * Cd over to the front-end.
    **cd front-end/**
