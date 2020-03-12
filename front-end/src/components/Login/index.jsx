@@ -151,6 +151,9 @@ class Login extends Component {
           <div>
             Login with Google <Link to="/auth/google"> SignIn</Link>
           </div>
+          <div>
+            Login with Github <Link to="/auth/github"> SignIn</Link>
+          </div>
         </form>
       </div>
     </div>

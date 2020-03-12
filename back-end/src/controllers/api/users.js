@@ -1,9 +1,19 @@
+<<<<<<< HEAD
 const createError = require("http-errors");
 const createController = require("../createController");
 const User = require("../../models/User");
 const authValidator = require("../../validators/auth");
 const jwt = require("../../utils/jwt");
 const { USER_NOT_FOUND, INCORRECT_PASSWORD } = require("../../utils/constants");
+=======
+const createError = require('http-errors');
+const nodemailer = require('nodemailer');
+const createController = require('../createController');
+const User = require('../../models/User');
+const authValidator = require('../../validators/auth');
+const jwt = require('../../utils/jwt');
+const { USER_NOT_FOUND, INCORRECT_PASSWORD } = require('../../utils/constants');
+>>>>>>> 140c0c17f8b592b8bf03e2fc67e416230931bb4a
 
 module.exports = {
   login: createController(
@@ -63,6 +73,79 @@ module.exports = {
         });
       }
 
+      // sending email
+
+      const output = `
+      <!doctype html>
+       <html lang="en">
+         <head>
+           <!-- Required meta tags -->
+           <meta charset="utf-8">
+           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+         <style>
+             .container {
+               
+                 background-color: #eee;
+                 
+                 font-family: Arial, Helvetica, sans-serif;
+                 padding: 20px;
+             }
+         </style>
+
+           
+         </head>
+         <body>
+           <div class="container">
+               <h3>Howdy ${body.username}!</h3>
+               <p>Thanks for signing up at BlogMan. Hope you have fun exploring the courses and blogs here.</p>
+               <p>Keep learning, keep coding :)</p>
+
+               <div class="footer">
+                 
+                   <p>Regards, <br>Team BlogMan</p>
+               </div>
+           </div>
+
+         
+         
+         </body>
+       </html>`;
+
+      // create reusable transporter object using the default SMTP transport
+      let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com', //'smtp.ethereal.email',
+        port: 587, //587
+        secure: false, // true for 465, false for other ports
+        auth: {
+          user: 'projectblogman@gmail.com', // generated ethereal user
+          pass: 'girlscript2020', //account.pass
+        },
+        tls: {
+          rejectUnauthorized: false,
+        },
+      });
+
+      // setup email data with unicode symbols
+      let mailOptions = {
+        from: 'BlogMan', // sender address
+        to: `${body.email}`, // list of receivers
+        subject: 'Welcome to BlogMan!', // Subject line
+
+        html: output, // html body
+      };
+
+      // send mail with defined transport object
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.log(error);
+        }
+        console.log('Message sent: %s', info.messageId);
+
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+      });
+
+      // creating a new user
       const newUser = new User(body);
 
       await newUser.save();
@@ -80,7 +163,13 @@ module.exports = {
         asObject: true,
         validators: [authValidator.register]
       },
+<<<<<<< HEAD
       inputs: ["name", "username", ["password", "hash"], "email", "birth"]
     }
   )
+=======
+      inputs: ['name', 'username', ['password', 'hash'], 'email', 'birth'],
+    },
+  ),
+>>>>>>> 140c0c17f8b592b8bf03e2fc67e416230931bb4a
 };

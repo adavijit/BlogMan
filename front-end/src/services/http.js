@@ -1,10 +1,21 @@
-import axios from "axios"
+import axios from 'axios';
 
 /**
  * Creating instance of axios
  * This will be useful if we want to add a global interceptor or headers
  */
 const http = axios.create();
+
+http.interceptors.request.use(
+  function(config) {
+    const token = localStorage.getItem('token_id');
+    if (token) config.headers.common['Authorization'] = `Bearer ${token}`;
+    return config;
+  },
+  function(error) {
+    return Promise.reject(error);
+  },
+);
 
 http.interceptors.response.use(
   function(response) {
@@ -22,7 +33,7 @@ http.interceptors.response.use(
         Object.keys(error.response.data.errors).length > 0
       ) {
         extractedErrors = error.response.data.errors;
-      } 
+      }
       if (error.response.data.message) {
         errorMsg = error.response.data.message;
       }
@@ -34,7 +45,7 @@ http.interceptors.response.use(
       errorObj.status = error.response.status;
     }
     return Promise.reject(errorObj);
-  }
+  },
 );
 
 export default http;
