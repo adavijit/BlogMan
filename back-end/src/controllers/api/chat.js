@@ -1,8 +1,11 @@
 const createError = require('http-errors');
+const Filter = require('bad-words');
 const createController = require('../createController');
 const Chat = require('../../models/Chat');
 const Message = require('../../models/Message');
 const { emitMessage } = require('../socket');
+
+const filter = new Filter();
 
 module.exports = {
   get: createController(async (req, res) => {
@@ -50,7 +53,7 @@ module.exports = {
           errors: { message: 'Invalid message.' },
         });
       }
-      const sanitizedMessage = (message + '').trim();
+      const sanitizedMessage = filter.clean((message + '').trim());
       if (!sanitizedMessage && !req.file) {
         throw new createError(404, 'Validation error.', {
           errors: { message: 'Message should not be empty.' },
