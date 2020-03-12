@@ -77,6 +77,16 @@ ul{
   box-shadow: 2px 4px 4px 4px rgba(0,0,0,0.2);
   transform: rotateY(180deg);
 }
+.profile-link{
+	text-align: right;
+	font-size: 11px;
+	margin-top: 5em;
+    margin-bottom: 0;
+	a {
+		display: inline-block;
+		padding: 5px;
+	}
+}
 
 .contributions{
   text-align: center;

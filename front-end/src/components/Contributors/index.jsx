@@ -15,8 +15,8 @@ export class Contributors extends Component {
 			<div>
 				<h2 className="contributorHeading">Our Contributors</h2>
 				<ul className="flex-list">
-					{this.state.contributors.map((user) => (
-						<li className="flip-card">
+					{this.state.contributors.map((user,index) => (
+						<li className="flip-card" key={index} >
 							<div className="flip-card-inner">
 								<div className="flip-card-front">
 									<div>
@@ -26,6 +26,7 @@ export class Contributors extends Component {
 								<div className="flip-card-back">
 									<h4>{user.login}</h4>
 									<div className={"contributions"}><span>Contributions : {user.contributions}</span></div>
+									<p className="profile-link"> <a href ={user.html_url} alt="Github profile">View Full Github Profile</a> </p>
 								</div>
 							</div>
 						</li>
