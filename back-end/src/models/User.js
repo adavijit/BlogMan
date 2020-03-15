@@ -23,7 +23,7 @@ const UserSchema = new Schema({
   },
   birth: {
     type:Date,
-    default: Date.now,
+    default: null,
   },
   bio: {
     type: String,
