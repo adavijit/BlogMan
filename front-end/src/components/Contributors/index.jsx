@@ -3,7 +3,7 @@ import axios from 'axios'
 import './index.scss'
 export class Contributors extends Component {
 	componentWillMount() {
-		axios.get('https://api.github.com/repos/adavijit/BlogMan/contributors').then((data) => {
+		axios.get('https://api.github.com/repos/adavijit/BlogMan/stats/contributors').then((data) => {
 			this.setState({ contributors: data.data })
 		})
 	}
@@ -11,6 +11,7 @@ export class Contributors extends Component {
 		contributors: []
 	}
 	render() {
+		this.state.contributors.sort((a,b)=>b-a)
 		return (
 			<div>
 				<h2 className="contributorHeading">Our Contributors</h2>
@@ -20,21 +21,21 @@ export class Contributors extends Component {
 							<div className="flip-card-inner">
 								<div className="flip-card-front">
 									<div>
-										<img className="image-div" src={user.avatar_url} alt="Avatar" />
+										<img className="image-div" src={user.author.avatar_url} alt="Avatar" />
 									</div>
 								</div>
 								<div className="flip-card-back">
-									<h4>{user.login}</h4>
-									<div className={"contributions"}><span>Contributions : {user.contributions}</span></div>
-									<p className="profile-link"> <a href ={user.html_url} alt="Github profile">View Full Github Profile</a> </p>
+									<h4>{user.author.login}</h4>
+									<div className={"commits"}><span>Commits : {user.total}</span></div>
+									<p className="profile-link"> <a href={user.author.html_url} alt="Github profile">View Full Github Profile</a> </p>
 								</div>
 							</div>
 						</li>
-
-					))}
+                    ))}
 				</ul>
 			</div>
 		)
+	
 	}
 }
 
