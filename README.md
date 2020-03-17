@@ -6,19 +6,20 @@
   
 </p>
 
+## About
+"Publish your words in your way! Whether you'd like to share your knowledge, experiences or the latest news, publish your own articles  in a unique and smart way"
 
-BlogMan is a new social blogging platform where anybody can share their views and read other's opinion related to any topic. It is a way to connect with people and to know how the world is thinking.
+BlogMan is a new social blogging platform where anybody can share their views and read other's opinion related to any topic. It is a way to connect with people and to know how the world is thinking. 
+BlogMan is created using the MongoDB, Express, React and NodeJS (MERN Stack).
 
 ## Built With
-Mongo - Database<br />
+MongoDB - Database<br />
 Express - NodeJS Framework<br />
 React - Frontend<br />
 NodeJS - Backend<br />
 CKEditor - Creating blogs<br />
 
 ## Build Setup
-
-BlogMan is created using the Mongo, Express, React and NodeJS (MERN) stack.
 
 In the project directory `BlogMan/front-end`, run this command to install dependencies:
 
@@ -29,9 +30,10 @@ In order to run the application:
 ### `npm start`
 
 Runs the app in the development mode.<br />
+
 Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
 
-The page will reload if you make edits.<br />
+The page will reload automatically if you make edits.<br />
 You will also see any lint errors in the console.
 
 ### `npm test`
@@ -45,7 +47,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.<br />
 
-## MongoDB Connection
+## MongoDB Connection (Database)
 Open "back-end/.env" to setup MongoDB environment and add your MongoDB URI, local or Atlas, client-id, client-secret and Youtube API key.<br />
 Console will display "Mongoose connected" if there are no issues with the connection.
 If there is any pertaining issue, console displays "Mongoose connection failed".<br />
@@ -68,3 +70,4 @@ Avijit Das<br />
 Rajat Upadhyay<br />
 Pratham Dogra<br />
 
+Keep Contributing !!
