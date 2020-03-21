@@ -41,4 +41,22 @@ module.exports = {
       .isLength({ min: 8 })
       .withMessage('Password should be minimun of 8 charecters.'),
   ],
+
+  googleSignup: [
+    body('token')
+      .trim()
+      .isString()
+      .withMessage('Token is required.'),
+    body('username')
+      .trim()
+      .isString()
+      .withMessage('Username is required.'),
+  ],
+
+  googleLogin: [
+    body('token')
+      .trim()
+      .isString()
+      .withMessage('Token is required.'),
+  ],
 };

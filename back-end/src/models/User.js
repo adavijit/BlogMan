@@ -49,8 +49,11 @@ const UserSchema = new Schema({
   },
   hash: { 
     type: String, 
-    required: true, 
+    required: false, 
   },
+  googleId: {
+    type: String
+  }
 }, {
     timestamps: true,
 });
@@ -74,7 +77,7 @@ UserSchema.methods.toJSON = function() {
 
 const hashPassword = function(next) {
   var user = this;
-  if (this.isModified('hash') || this.isNew) {
+  if (user.hash && (this.isModified('hash') || this.isNew)) {
     bcrypt.genSalt(10, function(err, salt) {
       if (err) {
         return next(err);
