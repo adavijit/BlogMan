@@ -7,6 +7,14 @@
 
 }
 
+.question-section {
+    padding: 15px 10px 15px 10px;
+}
+
+.answer {
+    background-color: #CEFFD6;
+}
+
 .socialIcon {
     margin: 10px;
 }
@@ -22,3 +30,4 @@
 .instagram {
     color: #E1306C
 }
+
