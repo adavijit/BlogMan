@@ -1,8 +1,9 @@
-### Fixes # (issue number)
+## Issue that this pull request solves
+ Closes: # (issue number)
 
 ## Proposed changes
 
-<!-- Brief description of what is fixed or changed -->
+Brief description of what is fixed or changed
 
 ## Types of changes
 
@@ -24,6 +25,9 @@ _Put an `x` in the boxes that apply_
 - [ ] I have made corresponding changes to the documentation
 - [ ] My changes generate no new warnings
 
+## Screenshots
+Please attach the screenshots of the changes made in case of change in user interface
+
 ## Other information
 
-<!-- Any other information that is important to this pull request such as screenshots of how the component looks before and after the change -->
+Any other information that is important to this pull request
