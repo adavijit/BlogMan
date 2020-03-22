@@ -6,7 +6,7 @@ export default class Blog extends Component {
     return (
       <div>
         {this.props.blogs.map(blog => (
-          <div className="col-lg-12 blog mt-3 p-1 media">
+          <div key={blog.id} className="col-lg-12 blog mb-3 p-1 media">
             <img
                 src="http://dipsinternational.com/wp-content/uploads/2017/03/user-icon-fontawesome.png"
                 alt="user icon"
@@ -18,9 +18,9 @@ export default class Blog extends Component {
                   {blog.text.substring(0, 300)} <Link to="#">...Read More</Link>
                 </div>
                 <div className="buttons d-flex w-100">
-                    <button className="btn btn-light">Like</button>
-                    <button className="btn btn-light ml-2">Comment</button>
-                    <button className="btn btn-light ml-auto">Share Via</button>
+                    <button className="btn btn-light btn-sm">Like</button>
+                    <button className="btn btn-light ml-2 btn-sm">Comment</button>
+                    <button className="btn btn-light ml-auto btn-sm">Share Via</button>
                 </div>
             </div>
           </div>

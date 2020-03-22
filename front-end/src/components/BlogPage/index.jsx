@@ -8,15 +8,18 @@ import BlogNav from "./BlogNav";
 import "./style.scss"
 
 let blogs = [
-  {
+  { 
+    id: 1,
     title: "Lorem ipsum dolor sit amet.",
     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam nemo officia aut necessitatibus alias natus laboriosam! Delectus deleniti, harum necessitatibus illum excepturi temporibus culpa quibusdam odit quo saepe, dicta consequatur, nesciunt nihil sequi. Beatae magni fugit suscipit, quis dolorem quaerat, quia voluptate consequuntur nostrum sed excepturi at veritatis iusto quidem!"
   },
-  {
+  { 
+    id: 2,
     title: "Lorem ipsum dolor sit amet.",
     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam nemo officia aut necessitatibus alias natus laboriosam! Delectus deleniti, harum necessitatibus illum excepturi temporibus culpa quibusdam odit quo saepe, dicta consequatur, nesciunt nihil sequi. Beatae magni fugit suscipit, quis dolorem quaerat, quia voluptate consequuntur nostrum sed excepturi at veritatis iusto quidem!"
   },
-  {
+  { 
+    id: 3,
     title: "Lorem ipsum dolor sit amet.",
     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam nemo officia aut necessitatibus alias natus laboriosam! Delectus deleniti, harum necessitatibus illum excepturi temporibus culpa quibusdam odit quo saepe, dicta consequatur, nesciunt nihil sequi. Beatae magni fugit suscipit, quis dolorem quaerat, quia voluptate consequuntur nostrum sed excepturi at veritatis iusto quidem!"
   },
@@ -82,7 +85,7 @@ export default class BlogPage extends Component {
           </div>
           <div className="col-lg-8 col-md-9">
             <div className="row">
-              <div className="col-lg-12 blog p-1 media">
+              <div className="col-lg-12 blog mb-3 p-1 media">
                 <img
                   src="http://dipsinternational.com/wp-content/uploads/2017/03/user-icon-fontawesome.png"
                   alt="user icon"
@@ -102,15 +105,16 @@ export default class BlogPage extends Component {
                     placeholder="Create new blog..."
                   ></textarea>
                   <div className="buttons">
-                    <button className="btn btn-light">Open With</button>
-                    <button className="btn btn-light float-right">Post</button>
+                    <button className="btn btn-light btn-sm">Open With</button>
+                    <button className="btn btn-light float-right btn-sm">Post</button>
                   </div>
                 </div>
               </div>
               <Blog blogs={this.state.blogs} />
             </div>
           </div>
-          <div className="col-lg-2 col-md-3">
+          <div className="col-md-3 d-lg-none"></div>
+          <div className="col-lg-2 col-md-9">
             <Trending trending={this.state.trending} />
           </div>
         </div>
