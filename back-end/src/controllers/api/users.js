@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const nodemailer = require('nodemailer');
+const axios = require('axios');
 const createController = require('../createController');
 const User = require('../../models/User');
 const authValidator = require('../../validators/auth');
@@ -155,6 +156,96 @@ module.exports = {
         validators: [authValidator.register],
       },
       inputs: ['name', 'username', ['password', 'hash'], 'email', 'birth'],
+    },
+  ),
+
+  googleSignup: createController(
+    async (req, res) => {
+      const { token, username } = res.locals.inputBody;
+
+      if (await User.findOne({ username })) {
+        throw new createError(409, 'This username aleady exists.', {
+          errors: {
+            username: `Username '${username}' is already taken.'`,
+          },
+        });
+      }
+
+      const response = await axios.get(
+        'https://www.googleapis.com/userinfo/v2/me',
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+
+      const data = response.data;
+      const { id, email, name } = data;
+
+      if (await User.findOne({ $or: [{ email }, { googleId: id }] })) {
+        throw new createError(409, 'This account already exists.', {
+          errors: {
+            default: `This account already exists, please try logging in.`,
+          },
+        });
+      }
+
+      const user = await User.create({
+        googleId: id,
+        name,
+        email,
+        username,
+      });
+
+      const jwtToken = await jwt.sign(user);
+      res.status(200).json({
+        token: jwtToken,
+        user,
+      });
+    },
+    {
+      validation: {
+        throwError: true,
+        asObject: true,
+        validators: [authValidator.googleSignup],
+      },
+      inputs: ['username', 'token'],
+    },
+  ),
+
+  googleLogin: createController(
+    async (req, res) => {
+      const { token } = res.locals.inputBody;
+
+      const response = await axios.get(
+        'https://www.googleapis.com/userinfo/v2/me',
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+
+      const data = response.data;
+      const { id, email, name } = data;
+      const user = await User.findOne({ $or: [{ email }, { googleId: id }] });
+      if (!user) {
+        throw new createError(401, 'This account does not exists.', {
+          errors: {
+            default: `This account does not exists, please signup.`,
+          },
+        });
+      }
+
+      const jwtToken = await jwt.sign(user);
+      res.status(200).json({
+        token: jwtToken,
+      });
+    },
+    {
+      validation: {
+        throwError: true,
+        asObject: true,
+        validators: [authValidator.googleLogin],
+      },
+      inputs: ['token'],
     },
   ),
 };
