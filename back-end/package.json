@@ -31,7 +31,6 @@
     "passport-google-oauth": "^2.0.0",
     "passport-google-oauth20": "^2.0.0",
     "rebuild": "^0.1.2",
-    "recommender": "^3.0.0",
     "request": "^2.88.2",
     "socket.io": "^2.3.0",
     "socketio-auth": "^0.1.1",
