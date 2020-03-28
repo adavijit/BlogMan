@@ -1,7 +1,14 @@
 const router = require('express').Router();
 // const controller = require('../../controllers/api/blog');
-const recommender = require("recommender")
+// const recommender = require("recommender")
 // const userModel=require("../../models/User")
+
+//fix my github.com/imabp
+const reccomender=require('ger');
+
+
+
+
 
 //find user using userId
 // let userId=req.query; 
@@ -25,7 +32,7 @@ let course5 = 'accounts';
 
 //new posts and new courses
 let documents = [
-    `${course1}`,
+    `${course1}`,9
     `${course2}`,
     `${course3}`,
     `${course4}`,
