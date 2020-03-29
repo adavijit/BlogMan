@@ -3,12 +3,15 @@ const router = require('express').Router();
 // const recommender = require("recommender")
 // const userModel=require("../../models/User")
 
-//fix my github.com/imabp
-const reccomender=require('ger');
 
-
-
-
+//fix by https://github.com/imabp ----------------------------------------
+const ContentBasedRecommender = require('content-based-recommender')
+const recommender = new ContentBasedRecommender({
+  minScore: 0.1,
+  maxSimilarDocuments: 100
+});
+//we are using content based recommender.
+// -------------------------------------------------------------------------------------
 
 //find user using userId
 // let userId=req.query; 
@@ -32,20 +35,30 @@ let course5 = 'accounts';
 
 //new posts and new courses
 let documents = [
-    `${course1}`,9
+    `${course1}`,
     `${course2}`,
     `${course3}`,
     `${course4}`,
     `${course5}`
 ];
 console.log(documents)
+//fix by https://github.com/imabp ----------------------------------------
+recommender.train(documents);
+// -------------------------------------------------------------
+
 
 let sortedDocs='';
-recommender.tfidf(query, documents, (sortedDocs) => {
-    console.log(sortedDocs);
-});
+
+
+//fix by https://github.com/imabp ----------------------------------------
+const sortedDocs = recommender.getSimilarDocuments(query, 0, 10);
+console.log(sortedDocs);
+// ----------------------------------------------------------------------
+
 
 //send sortedDocs to Controller blog.js for displaying
 // router.get('/blogs', controller.blog);
+
+
 
 module.exports = router;
