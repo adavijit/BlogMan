@@ -1,3 +1,4 @@
+$grey-color: #545454;
 // Flex Classes
 .dFlexRow {
 	display: flex;
@@ -22,21 +23,34 @@
 	flex-basis: 20%;
 	max-width: 20%;
 }
-.fx-b40 {
-	flex-basis:40%;
-	max-width: 40%;
-}
-.fx-b50 {
-	align-self: flex-end;
-	flex-basis: 50%;
+.fx-b27 {
+	flex-basis: 27%;
+	max-width: 27%;
 }
 .fx-b30 {
 	flex-basis: 30%;
 	max-width: 30%;
 }
+.fx-b35 {
+	flex-basis: 35%;
+	max-width: 35%;
+}
+.fx-b40 {
+	flex-basis: 40%;
+	max-width: 40%;
+}
+.fx-b50 {
+	align-self: flex-end;
+	flex-basis: 50%;
+	max-width: 50%;
+}
 .fx-b60 {
 	flex-basis: 60%;
 	max-width: 60%;
+}
+.fx-b65 {
+	flex-basis: 65%;
+	max-width: 65%;
 }
 .fx-b70 {
 	flex-basis: 70%;
@@ -51,10 +65,16 @@
 	max-width: 100%;
 }
 
+.pb-2{
+	padding-bottom: 1em !important;
+}
+.pt-2 {
+	padding-top: 1em !important;
+}
+
 .round-img{
 	border-radius: 100px;
 }
-
 // Flex Classes End
 
 // Header 
@@ -67,7 +87,7 @@
 	transform: translateX(-100%);
 }
 .headerContainer {
-	background-color: #545454;
+	background-color: $grey-color;
 	padding: 2em 3em 0 3em;
 }
 textarea {
@@ -147,11 +167,12 @@ ul.socialLinks {
 }
 .contentContainer {
 	margin: 0;
-	padding: 2.5em 10px;
+	padding: 1.5em 10px;
 	background-color: #a6a6a6;
 	list-style-type: none;
 }
-.blogItem {
+.blogItem,
+.suggestionItem {
 	padding: 10px;
 	& > div {
 		background-color: #c7d0d8;	
@@ -164,17 +185,16 @@ ul.socialLinks {
 	width: 100%;
 	text-align: right;
 	span {
-		padding-left: 28px;
+		padding-left: 32px;
 		position: relative;
-		color: #545454;
+		color: $grey-color;
 		img {
 			position: absolute;
 			left: 0;
 			top: 0;
 			font-size: 1em;
-			width: 20px;
-			height: 20px;
-			transform: rotate(15deg);
+			width: 25px;
+			height: 25px;
 		}
 	}
 
@@ -183,6 +203,7 @@ ul.socialLinks {
 	padding: 0 5px;
 	position: relative;
 	img {
+		object-fit: contain;
 		width: 100%;
 	}
 }
@@ -205,6 +226,7 @@ ul.socialLinks {
 	button {
 		padding: 10px;
 		border: none;
+		font-weight: 300;
 		background-color: #eceeef;
 		color: #727272;
 		max-width: 50%;
@@ -217,6 +239,43 @@ ul.socialLinks {
 		}
 	}
 }
+
+.outerFollowDiv {
+	padding-right: 2em;
+}
+.outerSuggestionDiv {
+	padding-left: 3em;
+}
+
+.followerInfo {
+	padding-left: 0.75em;
+	h4 {
+		margin-bottom: 2px;
+		color: $grey-color;
+	}
+	p {
+		font-size: 16px;
+		color: #737373;
+		margin-top: 1px;
+		margin-bottom: 5px;
+	}
+	.blogBtns {
+		button {
+			max-width: fit-content;
+		}
+	}
+}
+
+.suggestionOuter {
+	&>h4 {
+		padding: 0 20px;
+		color: $grey-color;
+	}
+	&>ul {
+		padding-top: 0;
+	}
+}
+
 @media screen and (max-width:"998px")
 {
 	.socialLinksDiv {
@@ -237,6 +296,20 @@ ul.socialLinks {
 		flex-basis: 100%;
 		max-width: 100%;
 		margin-top: 1.5em;
+	}
+	.suggestionItem {
+		&>div {
+			justify-content: center;
+		}
+		justify-content: center;
+		.blogImage,
+		.followerInfo {
+			flex-basis: 80%;
+			max-width: 80%;
+		}
+	}
+	.outerSuggestionDiv {
+		padding-left: 0;
 	}
 }
 
@@ -263,6 +336,14 @@ ul.socialLinks {
 	.socialLinksDiv {
 		flex-basis:50%;
 		max-width: 50%;
+	}
+	.suggestionItem {
+		justify-content: center;
+		.blogImage,
+		.followerInfo {
+			flex-basis: 100%;
+			max-width: 100%;
+		}
 	}
 	
 }
