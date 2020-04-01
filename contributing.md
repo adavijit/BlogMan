@@ -10,7 +10,7 @@
 * Create a seperate branch from the master branch in order to keep your master branch clean.
   **git branch BRANCH_NAME**
 * Always take pull from the upstream repo to your master branch in order to keep it at par with the main project.
-  **git pull origin upstream**
+  **git pull upstream master**
   
 * Before creating an issue, discuss it withe project mentors in the [Slack Channel](https://gssoc20.slack.com)
 * Create a seperate branch from the **master** branch before contributing anything in order to make your **local** and **origin** master branches at par with the **upstream** master branch.

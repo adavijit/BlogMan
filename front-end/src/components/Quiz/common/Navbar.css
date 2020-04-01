@@ -1,0 +1,32 @@
+@media screen and (min-width: 768px) {
+    #menu-button {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .navbar-right {
+        display: none;
+    }
+    .navbar-left {
+        display: none;
+    }
+}
+
+.user-btn {
+    margin-top: 20px;
+}
+
+.settings-btn {
+    margin-top: 10px;
+}
+
+.navbar-right {
+    margin-left: auto;
+    
+}
+
+.navbar-left {
+    margin-left: 10px;
+    margin-right: auto;
+}
