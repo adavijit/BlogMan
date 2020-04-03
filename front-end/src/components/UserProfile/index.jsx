@@ -6,6 +6,7 @@ export class UserProfile extends Component {
 	state = {
 		view: "blog",
 		blogs: ["blog1", "blog2", "blog3"],
+		favorites: ["fav1", "fav2", "fav3"],
 
 	}
 	handleViewChange = (view) => {
@@ -38,7 +39,10 @@ export class UserProfile extends Component {
 									<BlogOrFavorite key={index} view={this.state.view} />
 								))
 								:
-								''
+								this.state.favorites.map((item, index) => (
+									<BlogOrFavorite key={index} view={this.state.view} />
+								))
+
 							}
 
 						</ul>
