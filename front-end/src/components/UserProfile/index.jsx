@@ -10,6 +10,7 @@ export class UserProfile extends Component {
 		blogs: ["blog1", "blog2", "blog3"],
 		favorites: ["fav1", "fav2", "fav3"],
 		followers: ["follower1", "follower1", "follower1", "follower1"],
+		followings: ["follower1", "follower1", "follower1", "follower1"],
 		suggestions: ["suggestion1", "suggestion2"]
 
 	}
@@ -61,7 +62,9 @@ export class UserProfile extends Component {
 											<FollowList key={index} view={"follower"} />
 										))
 										:
-										''
+										this.state.followings.map((item, index) => (
+											<FollowList key={index} view={"followings"} />
+										))
 									}
 								</ul>
 							</div>
