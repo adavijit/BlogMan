@@ -1,17 +1,12 @@
 import React, { Component } from 'react'
 import ProfileHeader from './ProfileHeader'
 import BlogOrFavorite from './BlogOrFavorite'
-import FollowList from './FollowList'
-import Suggestions from './Suggestions'
 
 export class UserProfile extends Component {
 	state = {
 		view: "blog",
 		blogs: ["blog1", "blog2", "blog3"],
-		favorites: ["fav1", "fav2", "fav3"],
-		followers: ["follower1", "follower1", "follower1", "follower1"],
-		followings: ["follower1", "follower1", "follower1", "follower1"],
-		suggestions: ["suggestion1", "suggestion2"]
+
 	}
 	handleViewChange = (view) => {
 		this.setState({ view })
@@ -43,42 +38,12 @@ export class UserProfile extends Component {
 									<BlogOrFavorite key={index} view={this.state.view} />
 								))
 								:
-								this.state.favorites.map((item, index) => (
-									<BlogOrFavorite key={index} view={this.state.view} />
-								))
-
+								''
 							}
 
 						</ul>
 						:
-						<div className="dFlexRow">
-							<div className="fx-b70 dFlexRow outerFollowDiv">
-
-								<ul className="contentContainer dFlexRow followerContent">
-									{/* Followers/Following List */}
-									{this.state.view === "follower" ?
-										this.state.followers.map((item, index) => (
-											<FollowList key={index} view={"follower"} />
-										))
-										:
-										this.state.followings.map((item, index) => (
-											<FollowList key={index} view={"following"} />
-										))
-									}
-								</ul>
-							</div>
-							<div className="fx-b30 outerSuggestionDiv">
-								<div className="contentContainer suggestionOuter dFlexRow">
-									<h4 className="fx-b100">Suggestions</h4>
-									<ul className="fx-b100 contentContainer dFlexRow">
-										{/* Suggestion List */}
-										{this.state.suggestions.map((item, index) => (
-											<Suggestions key={index} />
-										))}
-									</ul>
-								</div>
-							</div>
-						</div>
+						''
 					}
 				</div>
 			</div>
