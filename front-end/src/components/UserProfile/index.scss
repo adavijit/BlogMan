@@ -244,7 +244,7 @@ ul.socialLinks {
 	padding-right: 2em;
 }
 .outerSuggestionDiv {
-	padding-left: 3em;
+	padding-left: 2em;
 }
 
 .followerInfo {
@@ -270,6 +270,7 @@ ul.socialLinks {
 	&>h4 {
 		padding: 0 20px;
 		color: $grey-color;
+		font-weight: 400;
 	}
 	&>ul {
 		padding-top: 0;
@@ -296,17 +297,6 @@ ul.socialLinks {
 		flex-basis: 100%;
 		max-width: 100%;
 		margin-top: 1.5em;
-	}
-	.suggestionItem {
-		&>div {
-			justify-content: center;
-		}
-		justify-content: center;
-		.blogImage,
-		.followerInfo {
-			flex-basis: 80%;
-			max-width: 80%;
-		}
 	}
 	.outerSuggestionDiv {
 		padding-left: 0;
