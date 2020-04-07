@@ -14,12 +14,14 @@
     "bad-words": "^3.0.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "content-based-recommender": "^1.4.0",
     "cookie-parser": "^1.4.4",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
+    "ger": "0.0.99",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.5",
     "mongoose-unique-validator": "^2.0.3",
@@ -37,6 +39,7 @@
     "youtube-search": "^1.1.4"
   },
   "devDependencies": {
-    "error-handler": "^1.0.0"
+    "error-handler": "^1.0.0",
+    "nodemon": "^2.0.2"
   }
 }

@@ -1,10 +1,5 @@
 # BlogMan
 
-<p>
-  
-  The flow till now : https://marvelapp.com/diceh34
-  
-</p>
 
 ## About
 

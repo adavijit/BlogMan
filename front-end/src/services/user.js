@@ -28,3 +28,25 @@ export const userRegister = async (body) => {
   });
 };
 
+export const userGoogleSignup = async (body) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await http.post(`${baseURL}/google-signup`, body);
+      resolve(res);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const userGoogleLogin = async (body) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await http.post(`${baseURL}/google-login`, body);
+      resolve(res);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+

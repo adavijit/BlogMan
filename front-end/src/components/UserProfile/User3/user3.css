@@ -1,0 +1,27 @@
+.profileheader {
+    background-color: #4B4B4B;
+    margin-top: 70px;
+    min-height: 300px;
+    padding: 20px 10px 20px 10px;
+}
+
+.profileavatar{
+    display: flex;
+    margin-top: 40px;
+    margin-left: 20px;
+}
+
+.headercontent {
+    display: grid;
+}
+.userhandle {
+    margin-top: 35px;
+    color: #fff;
+    margin-right: auto;
+}
+
+.social {
+    margin-top: 35px;
+    /* margin-left: auto; */
+    margin-left: 30px;
+}
