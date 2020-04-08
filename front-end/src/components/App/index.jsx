@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, withRouter, Switch, Route } from 'react-router-dom'
 
-import { Home, Register, Login, PrivateRoute, ChatRoom , Contributors } from '..'
+import { Home, Register, Login, PrivateRoute, ChatRoom , Contributors , UserProfile } from '..'
 import QuizMcq  from '../Quiz/mcq/quizMcq';
 import UserProfile from '../UserProfile/User3/UserProfile';
 
@@ -14,6 +14,7 @@ const App = () => (
 			<Route exact path ="/contributors" component ={Contributors} />
             <Route exact path="/sign-in" component={Login} />
             <Route exact path="/sign-up" component={Register} />
+			<Route exact path="/userProfile" component={UserProfile} />
             <Route exact path="/quizmcq" component={QuizMcq} />
             <Route exact path="/userprofile3" component={UserProfile} />
             <PrivateRoute exact path="/chat-room" component={ChatRoom} />
