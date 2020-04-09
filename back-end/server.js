@@ -24,7 +24,7 @@ app.use(initMiddleware);
 if (!isProduction) app.use(errorHandler);
 
 mongoose.connect(
-  process.env.MONGO_URL_LOCAL,
+  process.env.MONGO_URL_CLOUD,
   {
     useNewUrlParser: true,
     useCreateIndex: true,

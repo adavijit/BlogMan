@@ -6,6 +6,7 @@ import QuizMcq  from '../Quiz/mcq/quizMcq';
 import UserProfile from '../UserProfile/User3/UserProfile';
 
 import '../../styles/index.css'
+import TeamPage from '../TeamName'
 
 const App = () => (
     <BrowserRouter>
@@ -14,6 +15,7 @@ const App = () => (
 			<Route exact path ="/contributors" component ={Contributors} />
             <Route exact path="/sign-in" component={Login} />
             <Route exact path="/sign-up" component={Register} />
+            <Route exact path="/team-page" component={TeamPage} />
             <Route exact path="/quizmcq" component={QuizMcq} />
             <Route exact path="/userprofile3" component={UserProfile} />
             <PrivateRoute exact path="/chat-room" component={ChatRoom} />
