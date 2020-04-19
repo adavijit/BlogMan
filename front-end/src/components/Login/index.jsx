@@ -9,6 +9,14 @@ import constants from '../../utils/constants';
 import { setAuthToken } from '..';
 import { userLogin, userGoogleLogin } from '../../services/user';
 import { loginValidator } from '../../validators/auth';
+import Logo from '../../assets/logo.png';
+
+import Grid from '@material-ui/core/Grid';
+import GitHubIcon from '@material-ui/icons/GitHub';
+
+
+import './login.css';
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -137,7 +145,10 @@ class Login extends Component {
     return (
       <div className="wrap-registerForm">
         <div className="registerForm">
-          <h2 className="signInHeading">Sign In</h2>
+          <div className="logo-wrapper">
+            <img src={Logo} className="logo"/>
+          </div>
+          <h4 className="signInHeading">Sign in to Blogman</h4>
           <Divider style={{ marginBottom: '20px' }} />
 
           {!exists && commonError ? (
@@ -168,7 +179,7 @@ class Login extends Component {
               error={!!errors.password}
               helperText={errors.password}
             />
-            <div style={{ textAlign: 'left', marginTop: '30px' }}>
+            <div style={{ textAlign: 'left', marginTop: '20px' }}>
               <Button
                 style={{ marginBottom: '20px' }}
                 type="submit"
@@ -180,20 +191,54 @@ class Login extends Component {
                 Log In
               </Button>
             </div>
-            <div>
+            <div className="sign-up-link">
               Don't have an account? <Link to="/sign-up"> Sign Up </Link>
             </div>
-            <GoogleLogin
-              clientId={this.googleClientId}
-              buttonText="Login with Google"
-              onSuccess={this.handleGoogleRes}
-              onFailure={this.handleGoogleError}
-              cookiePolicy={'single_host_origin'}
-              fetchBasicProfile={false}
-            ></GoogleLogin>
-            <div>
-              Login with Github <Link to="/auth/github"> SignIn</Link>
-            </div>
+            <Grid container spacing={2}>
+              <Grid item xs={4} md={4}>
+                <hr/>
+              </Grid>
+              <Grid item xs={4} md={4}>
+                <p className="or-text">Or Log in with</p>
+              </Grid>
+              <Grid item xs={4} md={4}>
+                <hr/>
+              </Grid>
+            </Grid>
+            <Grid container spacing={2} style={{ marginTop: '10px'}}>
+              <Grid item xs={6} md={6} style={{ textAlign:'center'}}>
+                
+                {/* <GoogleLogin
+                  clientId={this.googleClientId}
+                  buttonText="Login with Google"
+                  onSuccess={this.handleGoogleRes}
+                  onFailure={this.handleGoogleError}
+                  cookiePolicy={'single_host_origin'}
+                  fetchBasicProfile={false}
+                ></GoogleLogin> */}
+
+              <GoogleLogin
+                  clientId={this.googleClientId}
+                  render={renderProps => (
+                    <Button variant="contained" color="secondary" 
+                    onClick={renderProps.onClick} disabled={renderProps.disabled}
+                    style={{ textTransform: 'none', width: '100%'}}><i className="fab fa-google" style={{ marginRight: '5px'}}></i>Google</Button>
+                  )}
+                  buttonText="Login"
+                  onSuccess={this.handleGoogleRes}
+                  onFailure={this.handleGoogleError}
+                  cookiePolicy={'single_host_origin'}
+                  fetchBasicProfile={false}
+                />
+                
+              </Grid>
+              <Grid item xs={6} md={6} style={{ textAlign:'center'}}>
+                <Button variant="contained" style={{ width: '100%', backgroundColor: '#000'}} >
+                  <GitHubIcon style={{ color: '#fff', marginRight: '5px'}}/>
+                  <Link to="/auth/github" style={{ textDecoration: 'none', textTransform: 'none', color: '#fff'}}>Github</Link>
+                </Button>
+              </Grid>
+            </Grid>
           </form>
         </div>
       </div>
