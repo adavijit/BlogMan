@@ -24,7 +24,7 @@ app.use(initMiddleware);
 if (!isProduction) app.use(errorHandler);
 
 mongoose.connect(
-  'mongodb+srv://lk:gagool123@cluster0-uzjlt.mongodb.net/test?retryWrites=true&w=majority',
+  process.env.MONGO_URL_CLOUD,
   {
     useNewUrlParser: true,
     useCreateIndex: true,
