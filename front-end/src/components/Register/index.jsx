@@ -15,7 +15,7 @@ import Grid from '@material-ui/core/Grid';
 import './register.css';
 
 import axios from 'axios';
-import APILAYER_API_KEY from '../../utils/constants';
+
 
 class Register extends Component {
   constructor(props) {
@@ -88,11 +88,13 @@ class Register extends Component {
     if (!this.checkForm()) return;
 
 
-    axios.post(`http://apilayer.net/api/check?access_key=${APILAYER_API_KEY}&email=${email}&smtp=1&format=1`)
+    axios.post(`http://apilayer.net/api/check?access_key=ee15a00aaef47d56b0ee4a52110b1c89&email=${email}&smtp=1&format=1`)
     .then(res => {
       // res.setHeader('Access-Control-Allow-Origin', '*');
       // res.setHeader('Access-Control-Allow-Headers', 'Access-Control-*', origin);
+      // console.log(`${APILAYER_API_KEY}`);
       // console.log(res.data);
+
       if(res.data.smtp_check === true && res.data.format_valid === true){
           console.log(res.data.smtp_check, res.data.format_valid);
         this.setState({
