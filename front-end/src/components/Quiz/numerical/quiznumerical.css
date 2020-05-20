@@ -1,0 +1,32 @@
+.breadcrumbs {
+    padding: 20px;
+    border: 1px solid #D8D8D8;
+    border-radius: 5px;
+    background-color: #e5e9f2;
+
+
+}
+
+.question-section {
+    padding: 15px 10px 15px 10px;
+}
+
+.answer {
+    background-color: #CEFFD6;
+}
+
+.socialIcon {
+    margin: 10px;
+}
+
+.facebook {
+    color: #4267B2;
+}
+
+.twitter {
+    color: #1DA1F2
+}
+
+.instagram {
+    color: #E1306C
+}

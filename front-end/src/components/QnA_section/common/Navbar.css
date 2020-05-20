@@ -1,0 +1,51 @@
+@media screen and (min-width: 768px) {
+    #menu-button {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .navbar-right {
+        display: none;
+    }
+    .navbar-left {
+        display: none;
+    }
+}
+
+.logo {
+    border: 2px white;
+    background: rgb(196, 192, 192);
+    padding: 7px 7px;
+    border-radius: 6px;
+}
+
+.notification-btn {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.user-btn {
+    transform: scale(1.8);
+    margin-top: 20px;
+    margin-right: 10px;
+}
+
+.settings-btn {
+    transform: scale(1.8);
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.navbar-right {
+    margin-left: 30px;
+    margin-right: 60px;
+    color: black;
+    
+}
+
+.navbar-left {
+    margin-left: 50px;
+    margin-right: auto;
+    color: grey;
+}

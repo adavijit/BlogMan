@@ -1,0 +1,29 @@
+.container{
+    display: grid;  
+    grid-template-columns: 75% 25%;
+    grid-template-rows: 60px; 
+    grid-gap: 10px;
+    justify-content: center;
+    background-color: white;
+    margin-top: 5px;
+}
+
+.container > div {
+    font-size: 20px; /* Increase font-size */
+    padding: 12px 20px 12px 20px; /* Add some padding */
+    border: 1px solid #eee; /* Add a grey border */
+    border-radius: 5px;
+    background-color: #eee;
+}
+
+.svg_icons{
+    position: relative;
+    transform: scale(1.5);
+}
+
+.svg_icons1 {
+    position: relative;
+    transform: scale(1.3);
+}
+
+

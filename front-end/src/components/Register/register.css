@@ -1,0 +1,20 @@
+.logo {
+    height: 90px;
+    width: auto;
+}
+
+.logo-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: -80px;
+    margin-bottom: 30px;
+}
+
+.or-text {
+    text-align: center;
+}
+
+.wrap-registerForm {
+    margin-top: 150px;
+}
