@@ -1,8 +1,0 @@
-### This issue has been submitted by keeping in mind the UX part of web app.
-
-#### Filepond JS is a JavaScript library that can upload anything you throw at it, optimize images for faster uploads, and offers a great, accessible, silky smooth user experience.
-Visit  [FilePond Js](https://pqina.nl/filepond/docs/) for documentation and getting started with FilePond JS
-
-
-You can take a look at one of my repositories here, using FilePond JS for uploading images.
-[My Book Store](github.com/imabp/mybookstore)
