@@ -1,0 +1,60 @@
+Best Google Fonts for Navbar Links
+
+"Raleway", sans-serif  --  "https://fonts.googleapis.com/css?family=Raleway:400,400i,600,700,700i&amp;subset=latin-ext"
+
+"Lato", sans-serif  -- "https://fonts.googleapis.com/css?family=Lato:300,400,400i,700"
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Best Google Fonts for Long Descriptions on the landing page or other pages.
+
+Crimson Text + Work Sans -- "https://fonts.googleapis.com/css?family=Crimson+Text|Work+Sans:400,700"
+
+Oswald + Cardo --  "https://fonts.googleapis.com/css?family=Cardo:400,700|Oswald"
+
+Quicksand (Medium + Light)  -- "https://fonts.googleapis.com/css?family=Quicksand:300,500"
+
+Archivo Black + Judson  --  "https://fonts.googleapis.com/css?family=Archivo+Black|Judson:400,700"
+
+Prata + Lato  --  "https://fonts.googleapis.com/css?family=Lato:300,700|Prata"
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Best Google Fonts for Heading
+
+Montserrat -- "https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,400;0,600;0,700;1,100;1,600&display=swap"
+
+Merriweather -- "https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap"
+
+Josefin Sans -- "https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,400;1,100&display=swap"
+
+Open Sans-- "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;1,300&display=swap
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Best Google Fonts for Small extra stuff that comes along with headings and subtext.
+
+Karla -- "https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,700;1,400&display=swap"
+
+Lora -- "https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&display=swap"
+
+Hind -- "https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500&display=swap" 
+
+PT Serif Caption -- "https://fonts.googleapis.com/css2?family=PT+Serif+Caption:ital@0;1&display=swap"
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Best Google Fonts for Footer links.
+
+Cabin -- "https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;1,400&display=swap"
+
+Source Sans Pro  -- "https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;1,200&display=swap"
+
+Poppins -- "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;1,100&display=swap"
+
+Roboto Slab  --  "https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300&display=swap"
