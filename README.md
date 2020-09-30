@@ -1,10 +1,5 @@
 # BlogMan
 
-<p>
-  
-  The flow till now : https://marvelapp.com/diceh34
-  
-</p>
 
 ## About
 
@@ -54,6 +49,18 @@ The build is minified and the filenames include the hashes.<br />
 Open "back-end/.env" to setup MongoDB environment and add your MongoDB URI, local or Atlas, client-id, client-secret and Youtube API key.<br />
 Console will display "Mongoose connected" if there are no issues with the connection.
 If there is any pertaining issue, console displays "Mongoose connection failed".<br />
+
+## Running the entire app on docker
+
+ - The docker files have been written for both the frontend and backend(inside the respective folders)
+ - Make sure you have `docker` and `docker-compose` installed on your system.
+ - Go to the root directory of the project.
+ - Run `docker-compose up --build`.
+ - This will build the individual docker images from within the respective folders and create the containers.
+ - The `docker-compose` file acts as a manager, for the individual docker files. It decides and configures things like which container runs on which port, the names of the containers and even the starting order of the docker containers.
+ - We use docker containers to run/develop our apps because they are light weight and while using docker containers, we don't need to have the respective tech-stack(like, npm, angular-cli, react-cli) locally installed on our system. This gives developers the ability to continue to develop projects irrespective of the platforms they are working on.
+ - **NOTE**: The MongoDB database for this project is running and maintained on Mongo Atlas as of now. Since multiple people have contributed to this project, before starting the apps, make sure the required API Keys are in-place(because some API keys are defined inside the respective folders - for both frontend and backend, and not through docker environment variables), otherwise there may be some weird errors.
+ - Should you run into some error, please refer the official documentation [here](https://docs.docker.com/)
 
 ### Prerequisites to contribute
 

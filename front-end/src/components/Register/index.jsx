@@ -10,6 +10,13 @@ import { setAuthToken } from '..';
 import { userRegister, userGoogleSignup } from '../../services/user';
 import { registerValidator } from '../../validators/auth';
 
+import Logo from '../../assets/logo.png';
+import Grid from '@material-ui/core/Grid';
+import './register.css';
+
+import axios from 'axios';
+
+
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -60,6 +67,8 @@ class Register extends Component {
     return true;
   }
 
+ 
+
   handleSubmit(e) {
     e.preventDefault();
     const { createUser, loginUser } = this.props;
@@ -78,30 +87,59 @@ class Register extends Component {
 
     if (!this.checkForm()) return;
 
-    userRegister(user)
-      .then((res) => {
-        createUser(res.data.userSaved);
-        const { token } = res.data;
-        setAuthToken(token);
-        const decoded = jwt_decode(token);
-        loginUser(decoded);
-        if (this.props.auth) {
-          localStorage.setItem('token_id', token);
-          localStorage.setItem('user', JSON.stringify(decoded));
-          this.setState({
-            exists: true,
-          });
-          this.props.history.push('/', this.state);
-        }
-      })
-      .catch((error) => {
-        const len = Object.keys(error.data).length;
+
+    axios.post(`http://apilayer.net/api/check?access_key=ee15a00aaef47d56b0ee4a52110b1c89&email=${email}&smtp=1&format=1`)
+    .then(res => {
+      // res.setHeader('Access-Control-Allow-Origin', '*');
+      // res.setHeader('Access-Control-Allow-Headers', 'Access-Control-*', origin);
+      // console.log(`${APILAYER_API_KEY}`);
+      // console.log(res.data);
+
+      if(res.data.smtp_check === true && res.data.format_valid === true){
+          console.log(res.data.smtp_check, res.data.format_valid);
         this.setState({
-          error:
-            len > 0 ? error.data[Object.keys(error.data)[0]] : error.message,
-          errors: len > 0 ? error.data : {},
+          error: '',
+          errors: {},
+        })
+
+        userRegister(user)
+        .then((res) => {
+          createUser(res.data.userSaved);
+          const { token } = res.data;
+          setAuthToken(token);
+          const decoded = jwt_decode(token);
+          loginUser(decoded);
+          if (this.props.auth) {
+            localStorage.setItem('token_id', token);
+            localStorage.setItem('user', JSON.stringify(decoded));
+            this.setState({
+              exists: true,
+            });
+            this.props.history.push('/', this.state);
+          }
+        })
+        .catch((error) => {
+          const len = Object.keys(error.data).length;
+          this.setState({
+            error:
+              len > 0 ? error.data[Object.keys(error.data)[0]] : error.message,
+            errors: len > 0 ? error.data : {},
+          });
         });
-      });
+        
+        
+      }else{
+        this.setState({
+          error: 'Invalid email!',
+          errors: {'message' : 'The email address provided doesn\'t exist!',
+                   'data': 'Invalid email!'},
+        })
+      }
+      
+    });
+
+
+    
   }
 
   handleChange(key, event) {
@@ -240,7 +278,10 @@ class Register extends Component {
       <div className="wrap-registerForm">
         {!this.state.isGoogleSignup && (
           <div className="registerForm">
-            <h2 className="signInHeading">Sign Up</h2>
+            <div className="logo-wrapper">
+              <img src={Logo} className="logo"/>
+            </div>
+            <h4 className="signInHeading">Sign up at Blogman</h4>
             <Divider style={{ marginBottom: '20px' }} />
             {!exists && error ? <Alert severity="error">{error}</Alert> : null}
             <form onSubmit={this.handleSubmit} autoComplete="off">
@@ -263,17 +304,44 @@ class Register extends Component {
                 {this.prevBtn(isEnabled)}
                 {this.nextBtn()}
               </div>
-              <div style={{ marginTop: '20px' }}>
+              <div style={{ marginTop: '20px', marginBottom: '20px', textAlign: 'center' }}>
                 Have an account? <Link to="/sign-in"> Sign In </Link>
               </div>
-              <GoogleLogin
+
+              <Grid container spacing={2}>
+                <Grid item xs={4} md={4}>
+                  <hr/>
+                </Grid>
+                <Grid item xs={4} md={4}>
+                  <p className="or-text">Or Signup with</p>
+                </Grid>
+                <Grid item xs={4} md={4}>
+                  <hr/>
+                </Grid>
+              </Grid>
+
+              {/* <GoogleLogin
                 clientId={this.googleClientId}
                 buttonText="Signup with Google"
                 onSuccess={this.handleGoogleRes}
                 onFailure={this.handleGoogleError}
                 cookiePolicy={'single_host_origin'}
                 fetchBasicProfile={false}
-              ></GoogleLogin>
+              ></GoogleLogin> */}
+
+                <GoogleLogin
+                  clientId={this.googleClientId}
+                  render={renderProps => (
+                    <Button variant="contained" color="secondary" 
+                    onClick={renderProps.onClick} disabled={renderProps.disabled}
+                    style={{ textTransform: 'none', width: '100%'}}><i className="fab fa-google" style={{ marginRight: '5px'}}></i>Google</Button>
+                  )}
+                  buttonText="Login"
+                  onSuccess={this.handleGoogleRes}
+                  onFailure={this.handleGoogleError}
+                  cookiePolicy={'single_host_origin'}
+                  fetchBasicProfile={false}
+                />
             </form>
           </div>
         )}
