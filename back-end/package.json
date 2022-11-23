@@ -34,7 +34,7 @@
     "passport-google-oauth20": "^2.0.0",
     "rebuild": "^0.1.2",
     "request": "^2.88.2",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.5.0",
     "socketio-auth": "^0.1.1",
     "youtube-search": "^1.1.4"
   },
