@@ -12,3 +12,17 @@ runbooks:
   - type: jsonPathSelector
     selector: '{.metadata.name}=cluster-admin'
   doc: backoff/pod-backoff.md
+- name: test
+  desc: test
+  selectors:
+  - type: labelSelector
+    selector: app=test
+  - type: jsonPathSelector
+    selector: '{.apiVersion}=v1'
+  - type: jsonPathSelector
+    selector: '{.kind}=Secret'
+  - type: jsonPathSelector
+    selector: '{.metadata.name}=bootstrap-token-abcdef'
+  - type: jsonPathSelector
+    selector: '{.metadata.namespace}=kube-system'
+  doc: test/test.md
