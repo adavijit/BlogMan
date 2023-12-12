@@ -1,4 +1,5 @@
-name: ""
+name: Blogman-backoff
+desc: Blogman runbooks for backoff
 runbooks:
 - name: bacckoff
   desc: runbooks for backoff
