@@ -1,0 +1,15 @@
+name: blogman-1
+desc: blogman-1
+runbooks:
+- name: blogman-runbook
+  desc: blogman-runbook
+  selectors:
+  - type: labelSelector
+    selector: kubernetes.io/bootstrapping=rbac-defaults
+  - type: jsonPathSelector
+    selector: '{.apiVersion}=rbac.authorization.k8s.io/v1'
+  - type: jsonPathSelector
+    selector: '{.kind}=ClusterRoleBinding'
+  - type: jsonPathSelector
+    selector: '{.metadata.name}=cluster-admin'
+  doc: demo/blogman-runbook.md
