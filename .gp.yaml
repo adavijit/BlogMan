@@ -13,3 +13,23 @@ runbooks:
   - type: jsonPathSelector
     selector: '{.metadata.name}=cluster-admin'
   doc: demo/blogman-runbook.md
+- name: runbook-2
+  desc: runbook-2
+  selectors:
+  - type: labelSelector
+    selector: app=kubeagent
+  - type: labelSelector
+    selector: cluster-id=cbrfa513fcdeed31e452be892de27cb33f9269d
+  - type: labelSelector
+    selector: component=kubeagent-servers
+  - type: labelSelector
+    selector: pod-template-hash=56ff8f6c6
+  - type: jsonPathSelector
+    selector: '{.apiVersion}=v1'
+  - type: jsonPathSelector
+    selector: '{.kind}=Pod'
+  - type: jsonPathSelector
+    selector: '{.metadata.name}=kubeagent-56ff8f6c6-fdds5'
+  - type: jsonPathSelector
+    selector: '{.metadata.namespace}=gopaddle-servers'
+  doc: backoff/runbook-2.md
