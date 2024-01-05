@@ -1,0 +1,9 @@
+name: test
+desc: test
+runbooks:
+- name: test
+  desc: test
+  selectors:
+  - type: labelSelector
+    selector: app-test
+  doc: test.md
