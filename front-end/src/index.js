@@ -13,6 +13,7 @@ const store = createStore(index, initialState, applyMiddleware(thunk))
 
 render(
   <BrowserRouter>
+  <ScrollToTop/>
     <Provider store={store}>
       <Switch>
         <Route path="/" component={App} />
