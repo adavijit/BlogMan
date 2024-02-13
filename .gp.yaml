@@ -7,3 +7,11 @@ runbooks:
   - type: labelSelector
     selector: app-test
   doc: test.md
+- name: test1
+  desc: test
+  selectors:
+  - type: labelSelector
+    selector: app=demo
+  - type: jsonPathSelector
+    selector: (.kind}=deployment
+  doc: test/test1.md
