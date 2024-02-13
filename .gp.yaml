@@ -15,3 +15,29 @@ runbooks:
   - type: jsonPathSelector
     selector: (.kind}=deployment
   doc: test/test1.md
+- name: test2
+  desc: test2
+  selectors:
+  - type: labelSelector
+    selector: app=mermaid
+  - type: labelSelector
+    selector: app-id=appsab909ba8cbe61c46e1cb3f9c4dffd24b038a
+  - type: labelSelector
+    selector: family=servicegroup
+  - type: labelSelector
+    selector: name=mermaid
+  - type: labelSelector
+    selector: pod-template-hash=5d7d4fbd6d
+  - type: labelSelector
+    selector: released-by=gopaddle
+  - type: labelSelector
+    selector: servicegroup=mermaid-sr2ai9v6
+  - type: jsonPathSelector
+    selector: '{.apiVersion}=v1'
+  - type: jsonPathSelector
+    selector: '{.kind}=Pod'
+  - type: jsonPathSelector
+    selector: '{.metadata.name}=mermaid-5d7d4fbd6d-8ppnv'
+  - type: jsonPathSelector
+    selector: '{.metadata.namespace}=gopaddle'
+  doc: test/test2.md
